@@ -74,6 +74,7 @@ export class GameSystem {
             }
         }
         else if (input.type === 'PlayerJoin') {
+                
             this.state.players.push({
                 id: input.playerId,
                 pos: { ...input.pos },

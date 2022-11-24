@@ -324,7 +324,9 @@ export default class SceneMap extends cc.Component {
         if(this.isFollowPlayer)
         {
             this.followPlayer(dt);
+
             //this.camera.node.position = this.player.node.position.sub(cc.v2(cc.winSize.width / 2,cc.winSize.height / 2));
+
         }
         
 
@@ -336,10 +338,14 @@ export default class SceneMap extends cc.Component {
 
     }
 
+    private _inCameraView() {
+
+    }
 
     private _updatePlayers() {
         // Update pos
         let playerStates = this.gameManager.state.players;
+        // cc.log(playerStates)
         for (let playerState of playerStates) {
             let playerId = playerState.id
             let player = this.players[playerId];
@@ -361,8 +367,25 @@ export default class SceneMap extends cc.Component {
                 }
             }
 
+            //画面外不处理 
+            // if (playerId != this.gameManager.selfPlayerId){
+            //     if (player.node.position.x < this.camera.node.position.x || 
+            //         player.node.position.y < this.camera.node.position.y || 
+            //         player.node.position.x > this.camera.node.position.x + this._mapParams.viewWidth || 
+            //         player.node.position.y > this.camera.node.position.y + this._mapParams.viewHeight){
+            //             player.node.active = false
+            //             continue
+            //         } else {
+            //             player.node.active = true
+
+            //         }
+            // }
+
+
             // 根据最新状态，更新 Player 表现组件
             this.movePlayer(playerId, playerState.targetX, playerState.targetY)
+            // player.node.position.x = playerState.targetX
+            // player.node.position.y = playerState.targetY
         }
 
         // Clear left players

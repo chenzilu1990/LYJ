@@ -140,7 +140,7 @@ export default class Charactor extends cc.Component {
     
     start () {
         
-        // this.playerName.string = this.playerName.string + this.id
+        this.playerName.string = this.playerName.string + this.id
         //this.movieClip.stop();
         this.direction = 0;
         this.state = 3;

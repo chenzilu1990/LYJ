@@ -35,7 +35,7 @@ export default class Main extends cc.Component {
     
     async start () {
 
-        cc.debug.setDisplayStats(false);
+        cc.debug.setDisplayStats(true);
 
         this.sceneMap.node.active = false;
 
