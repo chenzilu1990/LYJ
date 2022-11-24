@@ -1,0 +1,13 @@
+{
+  "creator": {
+    "version": "3.6.2"
+  },
+  "dependencies": {
+    "tsrpc-browser": "^3.4.1",
+    "tsrpc-miniapp": "^3.4.1"
+  },
+  "name": "frontend",
+  "type": "3d",
+  "uuid": "bf99a104-e066-4308-b22c-838964a6093e",
+  "version": "3.6.2"
+}
