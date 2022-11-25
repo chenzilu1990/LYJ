@@ -91,12 +91,14 @@ export default class SceneMap extends cc.Component {
                     targetY:this.player.node.y + this._selfSpeed.y,
                 })
             },
+            
             onOperateEnd: () => {
                 this._selfSpeed = undefined;
             }
         }
     }
     
+
     start () {
         
         this.node.x = -cc.winSize.width / 2;
