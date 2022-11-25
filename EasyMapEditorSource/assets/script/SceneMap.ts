@@ -381,14 +381,14 @@ export default class SceneMap extends cc.Component {
 
 
             // 根据最新状态，更新 Player 表现组件
-            // if (!playerState.moving){
-
+            if (!playerState.moving){
                 player.node.x = playerState.x
                 player.node.y = playerState.y
-                // } else {
+            } else {
+
                 this.movePlayer(playerId, playerState.targetX, playerState.targetY)
 
-            // }
+            }
         }
 
         // Clear left players
