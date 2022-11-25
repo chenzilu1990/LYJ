@@ -326,13 +326,13 @@ export default class SceneMap extends cc.Component {
             //this.camera.node.position = this.player.node.position.sub(cc.v2(cc.winSize.width / 2,cc.winSize.height / 2));
 
         }
-        if (this.player){
-            this.gameManager.sendClientInput({
-                type:'PlayerPos',
-                x:this.player.node.x,
-                y:this.player.node.y
-            })
-        }
+        // if (this.player){
+        //     this.gameManager.sendClientInput({
+        //         type:'PlayerPos',
+        //         x:this.player.node.x,
+        //         y:this.player.node.y
+        //     })
+        // }
 
         // Send Inputs
         this.gameManager.localTimePast();
@@ -381,14 +381,14 @@ export default class SceneMap extends cc.Component {
 
 
             // 根据最新状态，更新 Player 表现组件
-            if (!playerState.moving){
-                player.node.x = playerState.x
-                player.node.y = playerState.y
-            } else {
+            // if (!playerState.moving){
+            //     player.node.x = playerState.x
+            //     player.node.y = playerState.y
+            // } else {
 
                 this.movePlayer(playerId, playerState.targetX, playerState.targetY)
 
-            }
+            // }
         }
 
         // Clear left players
