@@ -84,13 +84,13 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 25
+        "__id__": 29
       },
       {
-        "__id__": 26
+        "__id__": 30
       },
       {
-        "__id__": 27
+        "__id__": 31
       }
     ],
     "_prefab": null,
@@ -753,13 +753,13 @@
       "__id__": 18
     },
     "stick": {
-      "__id__": 21
+      "__id__": 22
     },
     "_id": "a4BRsIBU5COolUp5kNlUbq"
   },
   {
     "__type__": "cc.Node",
-    "_name": "New Node",
+    "_name": "Joystick",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -772,13 +772,15 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 24
+        "__id__": 27
       },
       {
         "__id__": 16
       }
     ],
-    "_prefab": null,
+    "_prefab": {
+      "__id__": 28
+    },
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -828,7 +830,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "New Node",
+    "_name": "Disk",
     "_objFlags": 0,
     "_parent": {
       "__id__": 17
@@ -838,16 +840,18 @@
         "__id__": 19
       },
       {
-        "__id__": 21
+        "__id__": 22
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 23
+        "__id__": 25
       }
     ],
-    "_prefab": null,
+    "_prefab": {
+      "__id__": 26
+    },
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -897,7 +901,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "circle256",
+    "_name": "Base",
     "_objFlags": 0,
     "_parent": {
       "__id__": 18
@@ -909,7 +913,9 @@
         "__id__": 20
       }
     ],
-    "_prefab": null,
+    "_prefab": {
+      "__id__": 21
+    },
     "_opacity": 110,
     "_color": {
       "__type__": "cc.Color",
@@ -990,8 +996,19 @@
     "_id": "17h02DxJNEIoExM1TxYjD0"
   },
   {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 17
+    },
+    "asset": {
+      "__uuid__": "d95c5e71-5a9a-444d-8058-ed87fd250383"
+    },
+    "fileId": "96GIzkaE1DTpFAE+dvKJwA",
+    "sync": false
+  },
+  {
     "__type__": "cc.Node",
-    "_name": "circle256",
+    "_name": "Stick",
     "_objFlags": 0,
     "_parent": {
       "__id__": 18
@@ -1000,10 +1017,12 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 22
+        "__id__": 23
       }
     ],
-    "_prefab": null,
+    "_prefab": {
+      "__id__": 24
+    },
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -1056,7 +1075,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 21
+      "__id__": 22
     },
     "_enabled": true,
     "_materials": [
@@ -1082,6 +1101,17 @@
     "_isTrimmedMode": true,
     "_atlas": null,
     "_id": "3a05rU8YpEh7qtAJEX0aNS"
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 17
+    },
+    "asset": {
+      "__uuid__": "d95c5e71-5a9a-444d-8058-ed87fd250383"
+    },
+    "fileId": "cbhsq32KxCzr/+Km2jJnRT",
+    "sync": false
   },
   {
     "__type__": "cc.Widget",
@@ -1111,6 +1141,17 @@
     "_id": "c8N0zPIqZKiaQC2SlvZRFo"
   },
   {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 17
+    },
+    "asset": {
+      "__uuid__": "d95c5e71-5a9a-444d-8058-ed87fd250383"
+    },
+    "fileId": "ee4c5zO4pL2YlAsNvTWz+o",
+    "sync": false
+  },
+  {
     "__type__": "cc.Widget",
     "_name": "",
     "_objFlags": 0,
@@ -1136,6 +1177,17 @@
     "_originalWidth": 0,
     "_originalHeight": 500,
     "_id": "cbgusgLiRMrbGfaQijNjMR"
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 17
+    },
+    "asset": {
+      "__uuid__": "d95c5e71-5a9a-444d-8058-ed87fd250383"
+    },
+    "fileId": "",
+    "sync": false
   },
   {
     "__type__": "cc.Canvas",
