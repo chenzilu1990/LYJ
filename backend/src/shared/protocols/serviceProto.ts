@@ -17,7 +17,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 4,
+    "version": 8,
     "services": [
         {
             "id": 0,
@@ -94,6 +94,32 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "target": {
                             "type": "Reference",
                             "target": "../game/GameSystem/MovePlyer"
+                        },
+                        "keys": [
+                            "playerId"
+                        ],
+                        "type": "Omit"
+                    }
+                },
+                {
+                    "id": 3,
+                    "type": {
+                        "target": {
+                            "type": "Reference",
+                            "target": "../game/GameSystem/MoveEnd"
+                        },
+                        "keys": [
+                            "playerId"
+                        ],
+                        "type": "Omit"
+                    }
+                },
+                {
+                    "id": 4,
+                    "type": {
+                        "target": {
+                            "type": "Reference",
+                            "target": "../game/GameSystem/PlayerPos"
                         },
                         "keys": [
                             "playerId"
@@ -237,6 +263,67 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
+        "../game/GameSystem/MoveEnd": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "type",
+                    "type": {
+                        "type": "Literal",
+                        "literal": "MoveEnd"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "playerId",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "moving",
+                    "type": {
+                        "type": "Boolean"
+                    }
+                }
+            ]
+        },
+        "../game/GameSystem/PlayerPos": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "type",
+                    "type": {
+                        "type": "Literal",
+                        "literal": "PlayerPos"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "playerId",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "x",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "y",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
         "PtlJoin/ReqJoin": {
             "type": "Interface"
         },
@@ -365,6 +452,27 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "Number"
                     }
+                },
+                {
+                    "id": 7,
+                    "name": "moving",
+                    "type": {
+                        "type": "Boolean"
+                    }
+                },
+                {
+                    "id": 8,
+                    "name": "x",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 9,
+                    "name": "y",
+                    "type": {
+                        "type": "Number"
+                    }
                 }
             ]
         },
@@ -484,6 +592,20 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "Reference",
                         "target": "../game/GameSystem/MovePlyer"
+                    }
+                },
+                {
+                    "id": 7,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../game/GameSystem/PlayerPos"
+                    }
+                },
+                {
+                    "id": 6,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../game/GameSystem/MoveEnd"
                     }
                 }
             ]

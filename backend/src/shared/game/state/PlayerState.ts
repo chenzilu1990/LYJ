@@ -6,5 +6,8 @@ export interface PlayerState {
     dizzyEndTime?: number,
 
     targetX:number, 
-    targetY:number
+    targetY:number,
+    moving:boolean,
+    x:number, 
+    y:number
 }

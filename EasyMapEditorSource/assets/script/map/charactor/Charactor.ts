@@ -267,5 +267,12 @@ export default class Charactor extends cc.Component {
     {
         this.moving = false;
         this.state = CharactorState.stand;
+        if (this.id === this.sceneMap.gameManager.selfPlayerId){
+
+            this.sceneMap.gameManager.sendClientInput({
+                type:'MoveEnd',
+                moving:false
+            })
+        }
     }
 }

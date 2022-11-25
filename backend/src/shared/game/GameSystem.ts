@@ -58,7 +58,22 @@ export class GameSystem {
             }
             player.targetX = input.targetX
             player.targetY = input.targetY
-            
+            player.moving = true
+        }
+        else if (input.type === 'PlayerPos'){
+            let player = this._state.players.find(v => v.id === input.playerId);
+            if (!player) {
+                return;
+            }
+            player.x = input.x
+            player.y = input.y
+        }
+        else if (input.type === 'MoveEnd'){
+            let player = this._state.players.find(v => v.id === input.playerId);
+            if (!player) {
+                return;
+            }
+            player.moving = false
         }
         else if (input.type === 'PlayerAttack') {
             let player = this._state.players.find(v => v.id === input.playerId);
@@ -80,6 +95,9 @@ export class GameSystem {
                 pos: { ...input.pos },
                 targetX:this._initX,
                 targetY:this._initY,
+                x:this._initX,
+                y:this._initY,
+                moving:false,
             })
         }
         else if (input.type === 'PlayerLeave') {
@@ -159,10 +177,25 @@ export interface MovePlyer {
     targetY: number,
 }
 
+export interface MoveEnd {
+    type: 'MoveEnd',
+    playerId: number,
+    moving:boolean
+}
+
+export interface PlayerPos {
+    type: 'PlayerPos',
+    playerId: number,
+    x:number,
+    y:number
+}
+
 // 输入定义
 export type GameSystemInput = PlayerMove
     | PlayerAttack
     | PlayerJoin
     | PlayerLeave
     | TimePast
-    | MovePlyer;
+    | MovePlyer
+    | PlayerPos
+    | MoveEnd;

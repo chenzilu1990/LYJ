@@ -211,8 +211,6 @@ export default class SceneMap extends cc.Component {
             targetY:pos.y
         })
  
-        // this.gameManager.client.sendMsg()
-
         // this.movePlayer(this.gameManager.selfPlayerId, pos.x, pos.y);
 
 
@@ -328,7 +326,13 @@ export default class SceneMap extends cc.Component {
             //this.camera.node.position = this.player.node.position.sub(cc.v2(cc.winSize.width / 2,cc.winSize.height / 2));
 
         }
-        
+        if (this.player){
+            this.gameManager.sendClientInput({
+                type:'PlayerPos',
+                x:this.player.node.x,
+                y:this.player.node.y
+            })
+        }
 
         // Send Inputs
         this.gameManager.localTimePast();
@@ -338,9 +342,6 @@ export default class SceneMap extends cc.Component {
 
     }
 
-    private _inCameraView() {
-
-    }
 
     private _updatePlayers() {
         // Update pos
@@ -356,14 +357,11 @@ export default class SceneMap extends cc.Component {
                 player = this.players[playerId] = playerNode.getComponent(Charactor)!;
                 player.sceneMap = this
                 player.id = playerId
-                playerNode.x = playerState.targetX
-                playerNode.y = playerState.targetY
-                // player.init(playerState, playerId === this.gameManager.selfPlayerId)
-
+                playerNode.x = playerState.x
+                playerNode.y = playerState.y
                 // 摄像机拍摄自己
                 if (playerId === this.gameManager.selfPlayerId) {
                     this.player = player
-                    
                 }
             }
 
@@ -383,9 +381,14 @@ export default class SceneMap extends cc.Component {
 
 
             // 根据最新状态，更新 Player 表现组件
-            this.movePlayer(playerId, playerState.targetX, playerState.targetY)
-            // player.node.position.x = playerState.targetX
-            // player.node.position.y = playerState.targetY
+            // if (!playerState.moving){
+
+                player.node.x = playerState.x
+                player.node.y = playerState.y
+                // } else {
+                this.movePlayer(playerId, playerState.targetX, playerState.targetY)
+
+            // }
         }
 
         // Clear left players
