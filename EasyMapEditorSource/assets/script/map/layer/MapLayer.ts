@@ -162,14 +162,7 @@ export default class MapLayer extends cc.Component {
 								bitmap.spriteFrame = new cc.SpriteFrame(tex);
 							}
 						});
-						// cc.log(root + key)
-						// cc.loader.loadRes("map/bg/map_bg/" + key,cc.Texture2D,(error:Error,tex:cc.Texture2D)=>
-						// {
-						// 	if (GameConfig.loadHDMap){
 
-						// 		bitmap.spriteFrame = new cc.SpriteFrame(tex);
-						// 	}
-						// });
 					} else {
 						if (i == iy1 || i == iy2 || j == jx1 || j == jx2) {
 							if (this._sliceImgDic[key].node.active){

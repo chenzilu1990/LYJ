@@ -183,7 +183,7 @@ export default class SceneMap extends cc.Component {
 
         this.node.width = this.mapLayer.width;
         this.node.height = this.mapLayer.height;
-
+        this.joyStick.node.active = true
         
 
     }

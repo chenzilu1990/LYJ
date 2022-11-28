@@ -22,9 +22,12 @@ export default class Main extends cc.Component {
     @property(SceneMap)
     sceneMap: SceneMap = null;
 
+    
     @property(cc.Prefab)
     playerPrefab:cc.Prefab = null
-
+    
+    @property(cc.Node)
+    splash: cc.Node = null;
     public gameManager!: GameManager;
     // LIFE-CYCLE CALLBACKS:
 
@@ -39,7 +42,7 @@ export default class Main extends cc.Component {
         cc.debug.setDisplayStats(true);
 
         this.sceneMap.node.active = false;
-
+        this.splash.active = true
         await this._initGameManager()
 
         this.loadSlicesMap();
@@ -102,6 +105,7 @@ export default class Main extends cc.Component {
         const tex = await LoadMgr.loadRes("map/LYJ/miniMap",cc.Texture2D) as cc.Texture2D
         cc.log('fjsd===', mapAsset, mapData)
         this.sceneMap.node.active = true;
+        this.splash.active = false
         this.sceneMap.init(mapData,tex,MapLoadModel.slices)
 
         

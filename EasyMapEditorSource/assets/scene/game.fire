@@ -79,18 +79,21 @@
       },
       {
         "__id__": 17
+      },
+      {
+        "__id__": 29
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 29
+        "__id__": 32
       },
       {
-        "__id__": 30
+        "__id__": 33
       },
       {
-        "__id__": 31
+        "__id__": 34
       }
     ],
     "_prefab": null,
@@ -104,8 +107,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1200,
-      "height": 750
+      "width": 750,
+      "height": 1200
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -116,8 +119,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        600,
         375,
+        600,
         0,
         0,
         0,
@@ -769,7 +772,7 @@
         "__id__": 18
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 27
@@ -791,7 +794,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 600,
+      "width": 375,
       "height": 375
     },
     "_anchorPoint": {
@@ -803,8 +806,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -600,
         -375,
+        -600,
         0,
         0,
         0,
@@ -874,7 +877,7 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        300,
+        187.5,
         187.5,
         0,
         0,
@@ -1190,6 +1193,130 @@
     "sync": false
   },
   {
+    "__type__": "cc.Node",
+    "_name": "splash",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 2
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 30
+      },
+      {
+        "__id__": 31
+      }
+    ],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 750,
+      "height": 1200
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_trs": {
+      "__type__": "TypedArray",
+      "ctor": "Float64Array",
+      "array": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "_groupIndex": 0,
+    "groupIndex": 0,
+    "_id": "e0W83nUB1H1Y5hUdAaZI++"
+  },
+  {
+    "__type__": "cc.Sprite",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 29
+    },
+    "_enabled": true,
+    "_materials": [
+      {
+        "__uuid__": "eca5d2f2-8ef6-41c2-bbe6-f9c79d09c432"
+      }
+    ],
+    "_srcBlendFactor": 770,
+    "_dstBlendFactor": 771,
+    "_spriteFrame": {
+      "__uuid__": "67a0bd01-5ca9-4f59-bff5-60f2d176da9e"
+    },
+    "_type": 0,
+    "_sizeMode": 0,
+    "_fillType": 0,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_atlas": null,
+    "_id": "7baeug7ZtI0bMde9qoZwR+"
+  },
+  {
+    "__type__": "cc.Widget",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 29
+    },
+    "_enabled": true,
+    "alignMode": 1,
+    "_target": null,
+    "_alignFlags": 45,
+    "_left": 0,
+    "_right": 0,
+    "_top": 0,
+    "_bottom": 0,
+    "_verticalCenter": 0,
+    "_horizontalCenter": 0,
+    "_isAbsLeft": true,
+    "_isAbsRight": true,
+    "_isAbsTop": true,
+    "_isAbsBottom": true,
+    "_isAbsHorizontalCenter": true,
+    "_isAbsVerticalCenter": true,
+    "_originalWidth": 1500,
+    "_originalHeight": 2668,
+    "_id": "afSZv7iiNFoZfET0MdRXaX"
+  },
+  {
     "__type__": "cc.Canvas",
     "_name": "",
     "_objFlags": 0,
@@ -1199,8 +1326,8 @@
     "_enabled": true,
     "_designResolution": {
       "__type__": "cc.Size",
-      "width": 1200,
-      "height": 750
+      "width": 750,
+      "height": 1200
     },
     "_fitWidth": false,
     "_fitHeight": true,
@@ -1219,6 +1346,9 @@
     },
     "playerPrefab": {
       "__uuid__": "9f817679-db67-49df-9f61-34688f14d1e7"
+    },
+    "splash": {
+      "__id__": 29
     },
     "_id": "03Jh6iA4xKZ7vEWuUY6Aju"
   },
