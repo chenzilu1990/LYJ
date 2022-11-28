@@ -78,6 +78,7 @@ export class Joystick extends Component {
         this.stick.setPosition(stickPos);
 
         stickPos.normalize();
+        log(stickPos.x || 0, stickPos.y || 0)
         this.options?.onOperate({
             x: stickPos.x || 0,
             y: stickPos.y || 0

@@ -103,7 +103,7 @@ export default class AStarRoadSeeker implements IRoadSeeker {
         {
             if(step > this.maxStep)
             {
-                console.log("没找到目标计算步骤为：",step);
+                // console.log("没找到目标计算步骤为：",step);
                 return [];
             }
             
@@ -123,7 +123,7 @@ export default class AStarRoadSeeker implements IRoadSeeker {
             
             if(this._currentNode == this._targetNode)
             {
-                console.log("找到目标计算步骤为：",step);
+                // console.log("找到目标计算步骤为：",step);
                 return this.getPath();
             }else
             {

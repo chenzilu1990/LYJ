@@ -80,7 +80,7 @@ export default class Joystick extends cc.Component {
         this.stick.setPosition(stickPos);
 
         stickPos.normalize();
-        cc.log(stickPos.x || 0, stickPos.y || 0)
+        // cc.log(stickPos.x || 0, stickPos.y || 0)
         this.options?.onOperate({
             x: stickPos.x || 0,
             y: stickPos.y || 0

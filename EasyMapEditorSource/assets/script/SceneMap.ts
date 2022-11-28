@@ -73,7 +73,7 @@ export default class SceneMap extends cc.Component {
     joyStick!: Joystick = null
 
     // LIFE-CYCLE CALLBACKS:
-    private _selfSpeed?: cc.Vec2 = new cc.Vec2(0, 0);
+    private _selfSpeed?: cc.Vec2;
 
     onLoad () {
                 // 初始化摇杆
@@ -85,11 +85,6 @@ export default class SceneMap extends cc.Component {
                     this._selfSpeed = new cc.Vec2();
                 }
                 this._selfSpeed = cc.v2(v.x, v.y);
-                this.gameManager.sendClientInput({
-                    type: 'MovePlayer',
-                    targetX:this.player.node.x + this._selfSpeed.x,
-                    targetY:this.player.node.y + this._selfSpeed.y,
-                })
             },
             
             onOperateEnd: () => {
@@ -203,17 +198,15 @@ export default class SceneMap extends cc.Component {
     }
 
 
+    private _targetPos:cc.Vec2
     public onMapMouseDown(event:cc.Event.EventTouch):void
     {
 
         //var pos = this.node.convertToNodeSpaceAR(event.getLocation());
         var pos = this.camera.node.position.add(event.getLocation());
-        this.gameManager.sendClientInput({
-            type: 'MovePlayer',
-            targetX:pos.x,
-            targetY:pos.y
-        })
- 
+
+        this._targetPos = pos
+
         // this.movePlayer(this.gameManager.selfPlayerId, pos.x, pos.y);
 
 
@@ -328,13 +321,19 @@ export default class SceneMap extends cc.Component {
             //this.camera.node.position = this.player.node.position.sub(cc.v2(cc.winSize.width / 2,cc.winSize.height / 2));
 
         }
-        // if (this.player){
-        //     this.gameManager.sendClientInput({
-        //         type:'PlayerPos',
-        //         x:this.player.node.x,
-        //         y:this.player.node.y
-        //     })
-        // }
+
+        if (this._selfSpeed && this.player){
+            this._targetPos = this.player.node.position.addSelf(this._selfSpeed)
+        }
+        if (this._targetPos){
+            cc.log("=============")
+            this.gameManager.sendClientInput({
+                type: 'MovePlayer',
+                targetX:this._targetPos.x,
+                targetY:this._targetPos.y
+            })
+            this._targetPos = undefined
+        }
 
         // Send Inputs
         this.gameManager.localTimePast();
