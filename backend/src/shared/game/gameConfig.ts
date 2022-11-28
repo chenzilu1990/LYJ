@@ -10,5 +10,9 @@ export const gameConfig = {
     // 箭矢落地命中判定半径
     arrowAttackRadius: 2,
     // 被箭矢几种后的晕眩时间（毫秒）
-    arrowDizzyTime: 1000
+    arrowDizzyTime: 1000,
+
+    mapWidth:40000, 
+
+    mapHeight:27200
 }

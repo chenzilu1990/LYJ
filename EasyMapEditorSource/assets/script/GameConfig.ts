@@ -1,4 +1,4 @@
-export const GameConfig   =  {
+export  default  {
     // host: "https://admin.numberonespace.com",
     host: "https://admin.cteametaverse.com/cyz/", 
     
@@ -28,7 +28,8 @@ export const GameConfig   =  {
     // cardW:200,
     // cardH:100,
     
-    theme:"LYZ",
+    theme:"LYJ",
     
-    isPlayWithUE5: true
+    isPlayWithUE5: true,
+    loadHDMap:true
 }

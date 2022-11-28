@@ -93,10 +93,10 @@ export class GameSystem {
             this.state.players.push({
                 id: input.playerId,
                 pos: { ...input.pos },
-                targetX:this._initX,
-                targetY:this._initY,
-                x:this._initX,
-                y:this._initY,
+                targetX:gameConfig.mapWidth/2,
+                targetY:gameConfig.mapHeight/2,
+                x:gameConfig.mapWidth/2,
+                y:gameConfig.mapHeight/2,
                 moving:false,
             })
         }

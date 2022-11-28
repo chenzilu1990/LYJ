@@ -12,7 +12,8 @@ import SceneMap from "./SceneMap";
 import MapData from "./map/base/MapData";
 import { MapLoadModel } from "./map/base/MapLoadModel";
 import { GameManager } from "../scripts/models/GameManager";
-
+import  LoadMgr  from "../altLib/manager/LoadMgr";
+import GameConfig from "./GameConfig";
 const {ccclass, property} = cc._decorator;
 
 @ccclass
@@ -90,21 +91,20 @@ export default class Main extends cc.Component {
     /**
      * 加载分切片地图
      */
-    protected loadSlicesMap()
+    protected async loadSlicesMap()
     {
-        var mapName:string = "mapData";
+        // var mapName:string = "mapData";
 
-        cc.loader.loadRes("map/data/" + mapName,cc.JsonAsset,(error:Error,res:cc.JsonAsset)=>
-        {
-            var mapData:MapData = res.json;
+        const mapAsset = await LoadMgr.loadRes("map/LYJ/originData",cc.JsonAsset) as cc.JsonAsset
 
-            cc.loader.loadRes("map/bg/" + mapData.bgName + "/miniMap",cc.Texture2D,(error:Error,tex:cc.Texture2D)=>
-            {
-                this.sceneMap.node.active = true;
-                this.sceneMap.init(mapData,tex,MapLoadModel.slices)
-            });
+        var mapData:MapData = mapAsset.json;
 
-        });
+        const tex = await LoadMgr.loadRes("map/LYJ/miniMap",cc.Texture2D) as cc.Texture2D
+        cc.log('fjsd===', mapAsset, mapData)
+        this.sceneMap.node.active = true;
+        this.sceneMap.init(mapData,tex,MapLoadModel.slices)
+
+        
     }
     // update (dt) {}
 }

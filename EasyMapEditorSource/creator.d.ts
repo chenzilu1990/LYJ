@@ -8047,6 +8047,8 @@ declare namespace cc {
 		Gets the current state. 
 		*/
 		getState(): Sprite.State;	
+
+		setSpriteFrame(url:string, failed?:any):void;
 	}	
 	/** !#en The toggle component is a CheckBox, when it used together with a ToggleGroup, it
 	could be treated as a RadioButton.

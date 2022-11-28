@@ -64,7 +64,7 @@ export default class Joystick extends cc.Component {
         let diskPos = this.disk.position;
 
         let stickPos: cc.Vec2 = loc.sub(diskPos)
-        cc.log(stickPos)
+        // cc.log(stickPos)
         let length = stickPos.mag();
         if (length === 0) {
             this.stick.setPosition(0, 0, 0);
@@ -80,6 +80,7 @@ export default class Joystick extends cc.Component {
         this.stick.setPosition(stickPos);
 
         stickPos.normalize();
+        cc.log(stickPos.x || 0, stickPos.y || 0)
         this.options?.onOperate({
             x: stickPos.x || 0,
             y: stickPos.y || 0

@@ -148,8 +148,8 @@ export default class SceneMap extends cc.Component {
 
         this._mapParams.viewWidth = mapData.mapWidth > cc.winSize.width ? cc.winSize.width : mapData.mapWidth;
         this._mapParams.viewHeight = mapData.mapHeight > cc.winSize.height ? cc.winSize.height : mapData.mapHeight;
-        this._mapParams.sliceWidth = 256;
-        this._mapParams.sliceHeight = 256;
+        this._mapParams.sliceWidth = 512;
+        this._mapParams.sliceHeight = 512;
         this._mapParams.bgTex = bgTex;
         this._mapParams.mapLoadModel = mapLoadModel;
 
@@ -167,6 +167,7 @@ export default class SceneMap extends cc.Component {
             for(var j:number = 0 ; j < len2 ; j++)
             {
                 value = mapData.roadDataArr[i][j];
+                value = 0
                 dx = j;
                 dy = i;
                 
@@ -234,7 +235,6 @@ export default class SceneMap extends cc.Component {
         }else if(this.targetPos.x < 0)
         {
             this.targetPos.x = 0;
-            
         }    
 
         if(this.targetPos.y > this._mapParams.mapHeight - cc.winSize.height)
