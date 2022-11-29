@@ -279,9 +279,6 @@ export default class Charactor extends cc.Component {
         }
     }
 
-    /**
-     * hideSelf
-     */
     public setVisiable(visiable:boolean) {
         this.playerName.node.active = visiable
         this.movieClip.node.active = visiable
