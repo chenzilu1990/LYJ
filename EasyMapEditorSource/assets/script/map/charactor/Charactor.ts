@@ -31,6 +31,9 @@ export enum CharactorState
 @ccclass
 export default class Charactor extends cc.Component {
 
+
+
+
     public id:number = 0
 
     private _movieClip:MovieClip = null;
@@ -274,5 +277,13 @@ export default class Charactor extends cc.Component {
                 moving:false
             })
         }
+    }
+
+    /**
+     * hideSelf
+     */
+    public setVisiable(visiable:boolean) {
+        this.playerName.node.active = visiable
+        this.movieClip.node.active = visiable
     }
 }

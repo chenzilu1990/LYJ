@@ -367,29 +367,23 @@ export default class SceneMap extends cc.Component {
             }
 
             //画面外不处理 
-            // if (playerId != this.gameManager.selfPlayerId){
-            //     if (player.node.position.x < this.camera.node.position.x || 
-            //         player.node.position.y < this.camera.node.position.y || 
-            //         player.node.position.x > this.camera.node.position.x + this._mapParams.viewWidth || 
-            //         player.node.position.y > this.camera.node.position.y + this._mapParams.viewHeight){
-            //             player.node.active = false
-            //             continue
-            //         } else {
-            //             player.node.active = true
-
-            //         }
-            // }
+            if (playerId != this.gameManager.selfPlayerId){
+                if (player.node.position.x < this.camera.node.position.x || 
+                    player.node.position.y < this.camera.node.position.y || 
+                    player.node.position.x > this.camera.node.position.x + this._mapParams.viewWidth || 
+                    player.node.position.y > this.camera.node.position.y + this._mapParams.viewHeight){
+                        player.setVisiable(false)
+                    } else {
+                        player.setVisiable(true)
+                    }
+            }
 
 
             // 根据最新状态，更新 Player 表现组件
-            // if (!playerState.moving){
-            //     player.node.x = playerState.x
-            //     player.node.y = playerState.y
-            // } else {
 
-                this.movePlayer(playerId, playerState.targetX, playerState.targetY)
+            this.movePlayer(playerId, playerState.targetX, playerState.targetY)
 
-            // }
+
         }
 
         // Clear left players
