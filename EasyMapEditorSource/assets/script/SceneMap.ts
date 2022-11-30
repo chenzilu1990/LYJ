@@ -15,6 +15,7 @@ import MapParams from "./map/base/MapParams";
 import { GameManager } from "../scripts/models/GameManager";
 import Main from "./Main";
 import Joystick from "../scripts/Joystick";
+import LandNode from "./model/LandNode";
 
 // Learn TypeScript:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
@@ -101,28 +102,12 @@ export default class SceneMap extends cc.Component {
 
         this.gameManager = Main.instance.gameManager
 
-        // this._initPlayers()
 
         this.node.on(cc.Node.EventType.TOUCH_START,this.onMapMouseDown,this);
 
     }
 
-    private _initPlayers() {
-        for (const playerId of this.gameManager.players) {
-            
-            cc.log(playerId)
-            let playerNode = cc.instantiate(this.playerPrefab)
-            playerNode.getComponent(Charactor).sceneMap = this
-            playerNode.getComponent(Charactor).id = playerId
-            this.players[playerId] = playerNode.getComponent(Charactor)
-            this.entityLayer.node.addChild(playerNode)
-            if (playerId === this.gameManager.selfPlayerId){
 
-                this.player = playerNode.getComponent(Charactor)
-
-            }
-        }
-    }
 
     public init(mapData:MapData,bgTex:cc.Texture2D,mapLoadModel:MapLoadModel = 1)
     {
@@ -148,8 +133,8 @@ export default class SceneMap extends cc.Component {
         this._mapParams.bgTex = bgTex;
         this._mapParams.mapLoadModel = mapLoadModel;
 
-        this.mapLayer.init(this._mapParams);
-    
+        this.mapLayer.init(this._mapParams, this);
+        
         var len:number = mapData.roadDataArr.length;
         var len2:number = mapData.roadDataArr[0].length;
         
@@ -219,7 +204,7 @@ export default class SceneMap extends cc.Component {
     public followPlayer(dt:number)
     {
         if (!this.player) return
-
+        cc.log(this.player.node.x, this.player.node.y)
         this.targetPos = this.player.node.position.sub(cc.v2(cc.winSize.width / 2,cc.winSize.height / 2));
 
         if(this.targetPos.x > this._mapParams.mapWidth - cc.winSize.width)
@@ -247,8 +232,10 @@ export default class SceneMap extends cc.Component {
         {
             this.mapLayer.loadSliceImage(this.targetPos.x,this.targetPos.y);
         }
+        this.mapLayer.loadLandViews(this.targetPos.x,this.targetPos.y)
         
     }
+
 
     /**
         *移到玩家 
@@ -394,5 +381,9 @@ export default class SceneMap extends cc.Component {
                 delete this.players[player.id];
             }
         }
+    }
+
+    getLandNodeByWorldPoint(cx: number, cy: number): RoadNode {
+        return this._roadDic[cx + "_" + cy]
     }
 }

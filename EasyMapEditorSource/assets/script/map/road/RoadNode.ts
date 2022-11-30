@@ -22,11 +22,11 @@ export default class RoadNode {
     {
     }
     
-    public toString():String
+    public toString():string
     {
-        return "路点像素坐标：（" + this._px + "," + this._py +"),  " +
-            "路点世界坐标：（" + this._cx + "," + this._cy +"),  " + 
-            "路点平面直角坐标：（" + this._dx + "," + this._dy +")";
+        return "(" + this._dx + "," + this._dy +")" 
+        // + "\n(" + this._px + "," + this._py +")" 
+        // +"\n(" + this._dx + "," + this._dy +")";
     }
     
     public get px():number
@@ -138,4 +138,10 @@ export default class RoadNode {
     {
         this._parent = value;
     }
+
+    public get position():cc.Vec2{
+        return cc.v2(this._px, this._py)
+    }
+
+
 }

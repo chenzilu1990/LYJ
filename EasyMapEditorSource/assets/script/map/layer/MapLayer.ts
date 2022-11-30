@@ -11,6 +11,10 @@
 import MapParams from "../base/MapParams";
 import { MapLoadModel } from "../base/MapLoadModel";
 import GameConfig from "../../GameConfig";
+import MapRoadUtils from "../road/MapRoadUtils";
+import LandView from "../../view/LandView";
+import SceneMap from "../../SceneMap";
+import RoadNode from "../road/RoadNode";
 
 const {ccclass, property} = cc._decorator;
 const SLICE_COL = 4
@@ -39,9 +43,10 @@ export default class MapLayer extends cc.Component {
 		
 		private _sliceW: number
 		private _sliceH: number
-		
-		public init(mapParams:MapParams):void
+		private sceneMap: SceneMap = null;
+		public init(mapParams:MapParams, sceneMap: SceneMap):void
 		{
+			this.sceneMap = sceneMap
 			this._mapParams = mapParams;
 			
 			if(!this.bgImg)
@@ -65,12 +70,16 @@ export default class MapLayer extends cc.Component {
 			this.node.width = this.width;
 			this.node.height = this.height;
 
+			this.CardLayer.width = this.width
+			this.CardLayer.height = this.height
+
 			this._sliceW = mapParams.mapWidth / SLICE_COL
 			this._sliceH = mapParams.mapHeight / SLICE_ROW
 			SLICE_W_NUM = Math.ceil(this._sliceW/this._mapParams.sliceWidth)
 			SLICE_H_NUM = Math.ceil(this._sliceH/this._mapParams.sliceHeight)
 			// cc.log(this._sliceW, this._sliceH, SLICE_W_NUM, SLICE_H_NUM)
 			
+
 		}
 
 		
@@ -98,22 +107,12 @@ export default class MapLayer extends cc.Component {
 		{
 			const px1 = px + this._mapParams.viewWidth
 			const py1 = py + this._mapParams.viewHeight
-
-			// var iy1:number = Math.floor(py / this._mapParams.sliceHeight);
-			// var iy2:number = Math.floor(py1 / this._mapParams.sliceHeight);
-
-			// var jx1:number = Math.floor(px / this._mapParams.sliceWidth);  
-			// var jx2:number = Math.floor(px1 / this._mapParams.sliceWidth);
 			
 			var iy1: number = SLICE_H_NUM * Math.floor(py / this._sliceH) + Math.floor((py % this._sliceH) / this._mapParams.sliceHeight) - 1
 			var iy2: number = SLICE_H_NUM * Math.floor(py1 / this._sliceH) + Math.floor((py1 % this._sliceH) / this._mapParams.sliceHeight) + 1
 
 			var jx1: number = SLICE_W_NUM * Math.floor(px / this._sliceW) + Math.floor((px % this._sliceW) / this._mapParams.sliceWidth) - 1
 			var jx2: number = SLICE_W_NUM * Math.floor(px1 / this._sliceW) + Math.floor((px1 % this._sliceW) / this._mapParams.sliceWidth) + 1
-
-			// cc.log(px, py, this._mapParams.viewWidth, this._mapParams.viewHeight, Ljx1, Ljx2)
-			// cc.log(Ljx1, Ljx2)
-			// cc.log(Liy1, Liy2)
 
 			const getKey = (x, y) => {
 				let col = Math.floor(x / SLICE_W_NUM)
@@ -177,6 +176,59 @@ export default class MapLayer extends cc.Component {
 				}
 			}
 
+
+		}
+		private _addLandView: { [key: string]: LandView } = {}
+		private optimize: boolean = true
+		@property(cc.Node)
+		private CardLayer: cc.Node = null;
+		public loadLandViews(px: number, py: number): void {
+			let point1 = MapRoadUtils.instance.getDerectByPixel(px, py)
+			let point2 = MapRoadUtils.instance.getDerectByPixel(px + cc.visibleRect.width, py + cc.visibleRect.height)
+
+				
+			var key: string;
+			const hideWidth = 1
+			cc.log(point1.x, point2.x, point1.y, point2.y)
+			for (var i: number = point1.x - hideWidth; i <= point2.x + hideWidth; i++) {
+				for (var j: number = point1.y - hideWidth; j <= point2.y + hideWidth; j++) {
+
+
+					key = i + "_" + j; // 图片的索引是从1开始的，所以要加1
+
+					let landV = this._addLandView[key]
+					let { x, y } = MapRoadUtils.instance.getPixelByDerect(i, j)
+
+					if (i == point1.x - hideWidth || i == point2.x + hideWidth || j == point1.y - hideWidth || j == point2.y + hideWidth) {
+						if (!landV) continue
+						landV.node.active = false
+					} else {
+						if (!landV) {
+							let landV = this.dequeueReusableLandView(i, j )
+							this._addLandView[key] = landV
+							this.CardLayer.addChild(landV.node)
+							landV.node.x = x
+							landV.node.y = y
+							landV.roadNode = MapRoadUtils.instance.getNodeByDerect(i, j)
+						} else {
+							landV.node.active = true
+						}
+					}
+
+
+				}
+			}
+		}
+
+		@property(cc.Prefab)
+		private landViewPrefab:cc.Prefab = null
+		private dequeueReusableLandView(dx: number, dy: number): LandView {
+			let key = dx + "_" + dy
+
+			let node = cc.instantiate(this.landViewPrefab)
+			let landView = node.getComponent("LandView")
+
+			return landView
 
 		}
 
