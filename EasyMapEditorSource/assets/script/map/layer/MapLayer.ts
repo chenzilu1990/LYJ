@@ -44,6 +44,11 @@ export default class MapLayer extends cc.Component {
 		private _sliceW: number
 		private _sliceH: number
 		private sceneMap: SceneMap = null;
+
+		onLoad() {
+
+		}
+
 		public init(mapParams:MapParams, sceneMap: SceneMap):void
 		{
 			this.sceneMap = sceneMap
@@ -179,17 +184,38 @@ export default class MapLayer extends cc.Component {
 
 		}
 		private _addLandView: { [key: string]: LandView } = {}
+		
+	
+		
 		private optimize: boolean = true
 		@property(cc.Node)
 		private CardLayer: cc.Node = null;
+		private _preLoadX:number
+		private _preLoadY:number
 		public loadLandViews(px: number, py: number): void {
+			if (!this._preLoadX) this._preLoadX = px
+			if (!this._preLoadY) this._preLoadY = py
+				
+			// cc.log(this._preLoadX, this._preLoadY)
+			let isRight = (px - this._preLoadX) > 0
+			let isLeft = (px - this._preLoadX) < 0
+
+			let isUp = (py - this._preLoadY) > 0
+			let isDown = (py - this._preLoadY) < 0
+			
+			this._preLoadX = px
+			this._preLoadY = py
+
+			cc.log(isRight, isUp)
+
 			let point1 = MapRoadUtils.instance.getDerectByPixel(px, py)
 			let point2 = MapRoadUtils.instance.getDerectByPixel(px + cc.visibleRect.width, py + cc.visibleRect.height)
 
 				
 			var key: string;
 			const hideWidth = 1
-			cc.log(point1.x, point2.x, point1.y, point2.y)
+			const showWidth = point2.x - point1.x
+			cc.log(point1.x, point2.x)
 			for (var i: number = point1.x - hideWidth; i <= point2.x + hideWidth; i++) {
 				for (var j: number = point1.y - hideWidth; j <= point2.y + hideWidth; j++) {
 
@@ -200,9 +226,14 @@ export default class MapLayer extends cc.Component {
 					let { x, y } = MapRoadUtils.instance.getPixelByDerect(i, j)
 
 					if (i == point1.x - hideWidth || i == point2.x + hideWidth || j == point1.y - hideWidth || j == point2.y + hideWidth) {
+			
 						if (!landV) continue
+
 						landV.node.active = false
+						
 					} else {
+
+
 						if (!landV) {
 							let landV = this.dequeueReusableLandView(i, j )
 							this._addLandView[key] = landV
@@ -212,6 +243,7 @@ export default class MapLayer extends cc.Component {
 							landV.roadNode = MapRoadUtils.instance.getNodeByDerect(i, j)
 						} else {
 							landV.node.active = true
+							cc.log("============11222")
 						}
 					}
 
@@ -220,13 +252,31 @@ export default class MapLayer extends cc.Component {
 			}
 		}
 
+		/**
+		 * getLandViewByKey
+		 */
+		public getLandViewByKey(key:string) {
+			return this._addLandView[key]
+		}
+
+		/**
+		 * setLandViewByKey
+		 */
+		public setLandViewByKey(key:string, val:LandView) {
+			this._addLandView[key] = val
+		}
+
 		@property(cc.Prefab)
 		private landViewPrefab:cc.Prefab = null
+
+
 		private dequeueReusableLandView(dx: number, dy: number): LandView {
 			let key = dx + "_" + dy
 
-			let node = cc.instantiate(this.landViewPrefab)
-			let landView = node.getComponent("LandView")
+			let	landNode = cc.instantiate(this.landViewPrefab)
+		
+			
+			let landView = landNode.getComponent("LandView")
 
 			return landView
 

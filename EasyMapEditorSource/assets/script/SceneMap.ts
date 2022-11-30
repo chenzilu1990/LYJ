@@ -97,8 +97,8 @@ export default class SceneMap extends cc.Component {
 
     start () {
         
-        this.node.x = -cc.winSize.width / 2;
-        this.node.y = -cc.winSize.height / 2;
+        this.node.x = -cc.visibleRect.width / 2;
+        this.node.y = -cc.visibleRect.height / 2;
 
         this.gameManager = Main.instance.gameManager
 
@@ -126,8 +126,8 @@ export default class SceneMap extends cc.Component {
         this._mapParams.ceilWidth = mapData.nodeWidth;
         this._mapParams.ceilHeight = mapData.nodeHeight;
 
-        this._mapParams.viewWidth = mapData.mapWidth > cc.winSize.width ? cc.winSize.width : mapData.mapWidth;
-        this._mapParams.viewHeight = mapData.mapHeight > cc.winSize.height ? cc.winSize.height : mapData.mapHeight;
+        this._mapParams.viewWidth = mapData.mapWidth > cc.visibleRect.width ? cc.visibleRect.width : mapData.mapWidth;
+        this._mapParams.viewHeight = mapData.mapHeight > cc.visibleRect.height ? cc.visibleRect.height : mapData.mapHeight;
         this._mapParams.sliceWidth = 512;
         this._mapParams.sliceHeight = 512;
         this._mapParams.bgTex = bgTex;
@@ -165,6 +165,8 @@ export default class SceneMap extends cc.Component {
         {
             this._roadSeeker = new AStarRoadSeeker(this._roadDic);
         }
+
+        this.camera.node.position = cc.v2(this._mapParams.mapWidth/2, this._mapParams.mapHeight/2).sub(cc.v2(cc.visibleRect.width/2,cc.visibleRect.height/2));
 
         this.node.width = this.mapLayer.width;
         this.node.height = this.mapLayer.height;
@@ -205,19 +207,19 @@ export default class SceneMap extends cc.Component {
     {
         if (!this.player) return
         cc.log(this.player.node.x, this.player.node.y)
-        this.targetPos = this.player.node.position.sub(cc.v2(cc.winSize.width / 2,cc.winSize.height / 2));
+        this.targetPos = this.player.node.position.sub(cc.v2(cc.visibleRect.width / 2,cc.visibleRect.height / 2));
 
-        if(this.targetPos.x > this._mapParams.mapWidth - cc.winSize.width)
+        if(this.targetPos.x > this._mapParams.mapWidth - cc.visibleRect.width)
         {
-            this.targetPos.x = this._mapParams.mapWidth - cc.winSize.width;
+            this.targetPos.x = this._mapParams.mapWidth - cc.visibleRect.width;
         }else if(this.targetPos.x < 0)
         {
             this.targetPos.x = 0;
         }    
 
-        if(this.targetPos.y > this._mapParams.mapHeight - cc.winSize.height)
+        if(this.targetPos.y > this._mapParams.mapHeight - cc.visibleRect.height)
         {
-            this.targetPos.y = this._mapParams.mapHeight - cc.winSize.height;
+            this.targetPos.y = this._mapParams.mapHeight - cc.visibleRect.height;
         }else if(this.targetPos.y < 0)
         {
             this.targetPos.y = 0;
@@ -272,20 +274,20 @@ export default class SceneMap extends cc.Component {
     */		
     public setViewToPoint(px:number,py:number):void
     {
-        this.targetPos = cc.v2(px,py).sub(cc.v2(cc.winSize.width / 2,cc.winSize.height / 2));
+        this.targetPos = cc.v2(px,py).sub(cc.v2(cc.visibleRect.width / 2,cc.visibleRect.height / 2));
 
-        if(this.targetPos.x > this._mapParams.mapWidth - cc.winSize.width)
+        if(this.targetPos.x > this._mapParams.mapWidth - cc.visibleRect.width)
         {
-            this.targetPos.x = this._mapParams.mapWidth - cc.winSize.width;
+            this.targetPos.x = this._mapParams.mapWidth - cc.visibleRect.width;
         }else if(this.targetPos.x < 0)
         {
             this.targetPos.x = 0;
             
         }    
 
-        if(this.targetPos.y > this._mapParams.mapHeight - cc.winSize.height)
+        if(this.targetPos.y > this._mapParams.mapHeight - cc.visibleRect.height)
         {
-            this.targetPos.y = this._mapParams.mapHeight - cc.winSize.height;
+            this.targetPos.y = this._mapParams.mapHeight - cc.visibleRect.height;
         }else if(this.targetPos.y < 0)
         {
             this.targetPos.y = 0;
@@ -305,7 +307,7 @@ export default class SceneMap extends cc.Component {
         {
             this.followPlayer(dt);
 
-            //this.camera.node.position = this.player.node.position.sub(cc.v2(cc.winSize.width / 2,cc.winSize.height / 2));
+            //this.camera.node.position = this.player.node.position.sub(cc.v2(cc.visibleRect.width / 2,cc.visibleRect.height / 2));
 
         }
 

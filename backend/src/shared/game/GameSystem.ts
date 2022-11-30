@@ -19,8 +19,8 @@ export interface GameSystemState {
  */
 export class GameSystem {
 
-    private _initX:number = 400
-    private _initY:number = 300
+    private _initX:number = 0
+    private _initY:number = 0
     // 当前状态
     private _state: GameSystemState = {
         now: 0,
