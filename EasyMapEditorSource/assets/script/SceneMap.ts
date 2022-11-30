@@ -206,7 +206,7 @@ export default class SceneMap extends cc.Component {
     public followPlayer(dt:number)
     {
         if (!this.player) return
-        cc.log(this.player.node.x, this.player.node.y)
+        // cc.log(this.player.node.x, this.player.node.y)
         this.targetPos = this.player.node.position.sub(cc.v2(cc.visibleRect.width / 2,cc.visibleRect.height / 2));
 
         if(this.targetPos.x > this._mapParams.mapWidth - cc.visibleRect.width)

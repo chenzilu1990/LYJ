@@ -206,48 +206,65 @@ export default class MapLayer extends cc.Component {
 			this._preLoadX = px
 			this._preLoadY = py
 
-			cc.log(isRight, isUp)
+			// cc.log(isRight, isUp)
 
 			let point1 = MapRoadUtils.instance.getDerectByPixel(px, py)
 			let point2 = MapRoadUtils.instance.getDerectByPixel(px + cc.visibleRect.width, py + cc.visibleRect.height)
 
 				
-			var key: string;
-			const hideWidth = 1
+			// var key: string;
+			const hideWidth = -2
 			const showWidth = point2.x - point1.x
-			cc.log(point1.x, point2.x)
-			for (var i: number = point1.x - hideWidth; i <= point2.x + hideWidth; i++) {
-				for (var j: number = point1.y - hideWidth; j <= point2.y + hideWidth; j++) {
+			const left = point1.x - hideWidth
+			const right = point2.x + hideWidth
+			const down = point1.y - hideWidth
+			const up = point2.y + hideWidth
 
+			// cc.log(point1.x, point2.x)
+			for (var i: number = left; i <= right; i++) {
+				for (var j: number = down; j <= up; j++) {
 
-					key = i + "_" + j; // 图片的索引是从1开始的，所以要加1
-
+					const key = i + "_" + j; // 图片的索引是从1开始的，所以要加1
+					const outLeftkey = (left - 1) + "_" + j; // 图片的索引是从1开始的，所以要加1
+					const outRightkey = (right + 1) + "_" + j; // 图片的索引是从1开始的，所以要加1
+					const outDownkey = i + "_" + (down - 1); // 图片的索引是从1开始的，所以要加1
+					const outUpkey = i + "_" + (up + 1); // 图片的索引是从1开始的，所以要加1
+	
 					let landV = this._addLandView[key]
+					let outleftV = this._addLandView[outLeftkey]
+					let outrightV = this._addLandView[outRightkey]
+					let outdownV = this._addLandView[outDownkey]
+					let outupV = this._addLandView[outUpkey]
+					
 					let { x, y } = MapRoadUtils.instance.getPixelByDerect(i, j)
 
-					if (i == point1.x - hideWidth || i == point2.x + hideWidth || j == point1.y - hideWidth || j == point2.y + hideWidth) {
-			
-						if (!landV) continue
-
-						landV.node.active = false
+					if (!landV) {
 						
-					} else {
-
-
-						if (!landV) {
-							let landV = this.dequeueReusableLandView(i, j )
-							this._addLandView[key] = landV
-							this.CardLayer.addChild(landV.node)
-							landV.node.x = x
-							landV.node.y = y
-							landV.roadNode = MapRoadUtils.instance.getNodeByDerect(i, j)
-						} else {
-							landV.node.active = true
-							cc.log("============11222")
+					
+						if (j === up && outdownV ){
+							landV = outdownV
+						} 
+						else if (j === down && outupV ){
+							landV = outupV
+						} 
+						else if (i === left && outrightV ){
+							landV = outrightV
+						} 
+						else if (i === right && outleftV ){
+							landV = outleftV
 						}
-					}
-
-
+						else {
+							
+							landV = this.dequeueReusableLandView(i, j )
+							this.CardLayer.addChild(landV.node)
+						}
+						
+					} 
+					this._addLandView[key] = landV
+					landV.node.x = x
+					landV.node.y = y
+					landV.roadNode = MapRoadUtils.instance.getNodeByDerect(i, j)
+					
 				}
 			}
 		}
