@@ -24,7 +24,7 @@ export default class RoadNode {
     
     public toString():string
     {
-        return "(" + this._dx + "," + this._dy +")" 
+        return "(" + this._cx + "," + this._cy +")" 
         // + "\n(" + this._px + "," + this._py +")" 
         // +"\n(" + this._dx + "," + this._dy +")";
     }

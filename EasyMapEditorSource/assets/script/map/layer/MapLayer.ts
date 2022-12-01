@@ -190,83 +190,87 @@ export default class MapLayer extends cc.Component {
 		private optimize: boolean = true
 		@property(cc.Node)
 		private CardLayer: cc.Node = null;
-		private _preLoadX:number
-		private _preLoadY:number
-		public loadLandViews(px: number, py: number): void {
-			if (!this._preLoadX) this._preLoadX = px
-			if (!this._preLoadY) this._preLoadY = py
-				
-			// cc.log(this._preLoadX, this._preLoadY)
-			let isRight = (px - this._preLoadX) > 0
-			let isLeft = (px - this._preLoadX) < 0
+		public loadLandViews(px: number, py: number, position:cc.Vec2): void {
 
-			let isUp = (py - this._preLoadY) > 0
-			let isDown = (py - this._preLoadY) < 0
+
+			let pointCenter = MapRoadUtils.instance.getWorldPointByPixel(position.x, position.y)
 			
-			this._preLoadX = px
-			this._preLoadY = py
+			const hideWidth = 2
+			const left = pointCenter.x - hideWidth
+			const right = pointCenter.x + hideWidth
+			const down = pointCenter.y - hideWidth
+			const up = pointCenter.y + hideWidth
 
-			// cc.log(isRight, isUp)
-
-			let point1 = MapRoadUtils.instance.getDerectByPixel(px, py)
-			let point2 = MapRoadUtils.instance.getDerectByPixel(px + cc.visibleRect.width, py + cc.visibleRect.height)
-
-				
-			// var key: string;
-			const hideWidth = -2
-			const showWidth = point2.x - point1.x
-			const left = point1.x - hideWidth
-			const right = point2.x + hideWidth
-			const down = point1.y - hideWidth
-			const up = point2.y + hideWidth
-
-			// cc.log(point1.x, point2.x)
 			for (var i: number = left; i <= right; i++) {
 				for (var j: number = down; j <= up; j++) {
 
 					const key = i + "_" + j; // 图片的索引是从1开始的，所以要加1
-					const outLeftkey = (left - 1) + "_" + j; // 图片的索引是从1开始的，所以要加1
-					const outRightkey = (right + 1) + "_" + j; // 图片的索引是从1开始的，所以要加1
-					const outDownkey = i + "_" + (down - 1); // 图片的索引是从1开始的，所以要加1
-					const outUpkey = i + "_" + (up + 1); // 图片的索引是从1开始的，所以要加1
-	
+
+					const leftUp = (left - 1) + "_" + (up + 1);
+					const rightDown = (right + 1) + "_" + (down - 1);
+					const rightUp = (right + 1) + "_" + (up + 1);
+					const leftDown = (left - 1) + "_" + (down - 1);
+
+					const outLeftkey = (left - 1) + "_" + j;
+					const outRightkey = (right + 1) + "_" + j;
+					const outDownkey = i + "_" + (down - 1);
+					const outUpkey = i + "_" + (up + 1);
+					
 					let landV = this._addLandView[key]
+
+					let leftUpV = this._addLandView[leftUp]
+					let rightDownV = this._addLandView[rightDown]
+					let rightUpV = this._addLandView[rightUp]
+					let leftDownV = this._addLandView[leftDown]
+
 					let outleftV = this._addLandView[outLeftkey]
 					let outrightV = this._addLandView[outRightkey]
 					let outdownV = this._addLandView[outDownkey]
 					let outupV = this._addLandView[outUpkey]
 					
-					let { x, y } = MapRoadUtils.instance.getPixelByDerect(i, j)
+					let { x, y } = MapRoadUtils.instance.getPixelByWorldPoint(i, j)
 
 					if (!landV) {
-						
 					
-						if (j === up && outdownV ){
-							landV = outdownV
-						} 
-						else if (j === down && outupV ){
-							landV = outupV
-						} 
-						else if (i === left && outrightV ){
+						if (i === left && outrightV ){
 							landV = outrightV
 						} 
 						else if (i === right && outleftV ){
 							landV = outleftV
+						} 
+						else if (j === up && (outdownV ) ){
+							landV = outdownV
+						} 
+						else if (j === down && (outupV ) ){
+							landV = outupV 
+						} 
+						else if (i === left && j === up && rightDownV) {
+							landV = rightDownV
+						}
+						else if (i === right && j === down && leftUpV) {
+							landV = leftUpV
+						}
+						else if (i === right && j === up && leftDownV) {
+							landV = leftDownV
+						}
+						else if (i === left && j === down && rightUpV) {
+							landV = rightUpV
 						}
 						else {
-							
-							landV = this.dequeueReusableLandView(i, j )
-							this.CardLayer.addChild(landV.node)
+							let landView = this.dequeueReusableLandView(i, j)
+							this.CardLayer.addChild(landView.node)
+							landV = landView
 						}
-						
 					} 
 					this._addLandView[key] = landV
+
 					landV.node.x = x
 					landV.node.y = y
-					landV.roadNode = MapRoadUtils.instance.getNodeByDerect(i, j)
+					landV.roadNode = MapRoadUtils.instance.getNodeByWorldPoint(i, j)
 					
 				}
 			}
+			// cc.log(this.CardLayer.children.length)
 		}
 
 		/**
