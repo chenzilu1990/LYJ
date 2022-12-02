@@ -264,11 +264,11 @@ export default class MapLayer extends cc.Component {
 					} 
 					this._addLandView[key] = landV
 
+					landV.node.zIndex = cc.macro.MAX_ZINDEX - ( i* 100 + j)
 					landV.node.x = x
 					landV.node.y = y
 					landV.roadNode = MapRoadUtils.instance.getNodeByWorldPoint(i, j)
 					landV.nodeType = this.sceneMap.resDic[i+'_'+j]
-					
 				}
 			}
 			// cc.log(this.CardLayer.children.length)
