@@ -40,6 +40,8 @@ export class GameManager {
         });;
         client.listenMsg('server/Frame', msg => { this._onServerSync(msg) });
 
+        client.listenMsg('server/RandomMapdata', msg => { this._onServerRandom(msg) });
+
         // 模拟网络延迟 可通过 URL 参数 ?lag=200 设置延迟
         let networkLag = parseInt(location.search.match(/\blag=(\d+)/)?.[1] || '0');
         if (networkLag) {
@@ -81,7 +83,12 @@ export class GameManager {
         this.lastRecvSetverStateTime = Date.now();
         this.selfPlayerId = ret.res.playerId;
         this.players = ret.res.players
-        cc.log(this.gameSystem.state)
+        cc.log("join=======end")
+    }
+
+    private _onServerRandom() {
+        cc.log('_onServerRandom===')
+        
     }
 
     private _onServerSync(frame: MsgFrame) {

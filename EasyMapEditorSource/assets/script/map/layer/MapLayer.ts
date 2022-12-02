@@ -195,7 +195,7 @@ export default class MapLayer extends cc.Component {
 
 			let pointCenter = MapRoadUtils.instance.getWorldPointByPixel(position.x, position.y)
 			
-			const hideWidth = 2
+			const hideWidth = 4
 			const left = pointCenter.x - hideWidth
 			const right = pointCenter.x + hideWidth
 			const down = pointCenter.y - hideWidth
@@ -267,6 +267,7 @@ export default class MapLayer extends cc.Component {
 					landV.node.x = x
 					landV.node.y = y
 					landV.roadNode = MapRoadUtils.instance.getNodeByWorldPoint(i, j)
+					landV.nodeType = this.sceneMap.resDic[i+'_'+j]
 					
 				}
 			}

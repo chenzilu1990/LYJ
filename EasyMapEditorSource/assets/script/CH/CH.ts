@@ -51,20 +51,21 @@ export default class CH {
         let home4 = home5 + 0
         let home3 = home4 + 0
         let home2 = home3 + 0
-        let home1 = home2 + 20
+        let home1 = home2 + 0
 
-        let sd5 = home1 + 5
-        let sd4 = sd5 + 5
-        let sd3 = sd4 + 5
-        let sd2 = sd3 + 20
+        let sd5 = home1 + 50
+        let sd4 = sd5 + 50
+        let sd3 = sd4 + 50
+        let sd2 = sd3 + 50
         let sd1 = sd2 + 50
 
-        let cy5 = sd1 + 5
-        let cy4 = cy5 + 5
-        let cy3 = cy4 + 5
-        let cy2 = cy3 + 20
+        let cy5 = sd1 + 50
+        let cy4 = cy5 + 50
+        let cy3 = cy4 + 50
+        let cy2 = cy3 + 50
         let cy1 = cy2 + 50
 
+        let long1 = cy1 + 100
 
         let type
         let r = Math.random() * 1000
@@ -98,6 +99,8 @@ export default class CH {
             type = NodeType.CY2
         } else if (r < cy1) {
             type = NodeType.CY
+        } else if (r < long1) {
+            type = NodeType.LONG1
         } else if (type == NodeType.trans) {
             type = NodeType.trans
         } else {

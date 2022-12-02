@@ -11,6 +11,7 @@ export class Room {
 
     // 帧同步频率，次数/秒
     syncRate = gameConfig.syncRate;
+    randomInterval = gameConfig.randomInterval;
     nextPlayerId = 1;
 
     gameSystem = new GameSystem();
@@ -25,6 +26,7 @@ export class Room {
     constructor(server: WsServer<ServiceType>) {
         this.server = server;
         setInterval(() => { this.sync() }, 1000 / this.syncRate);
+        setInterval(() => { this.randomMapdata() }, 1000 * this.randomInterval);
     }
 
     /** 加入房间 */
@@ -82,6 +84,16 @@ export class Room {
             v.sendMsg('server/Frame', {
                 inputs: inputs,
                 lastSn: this.playerLastSn[v.playerId!]
+            })
+        });
+    }
+
+    randomMapdata(){
+        this.conns.forEach(v => {
+            v.sendMsg('server/RandomMapdata', {
+                randomData:{
+                    '235_235': 10
+                }
             })
         });
     }

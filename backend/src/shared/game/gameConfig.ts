@@ -14,5 +14,7 @@ export const gameConfig = {
 
     mapWidth:40000, 
 
-    mapHeight:27200
+    mapHeight:27200,
+
+    randomInterval: 1,
 }

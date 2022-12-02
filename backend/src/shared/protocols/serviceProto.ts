@@ -2,6 +2,7 @@ import { ServiceProto } from 'tsrpc-proto';
 import { MsgClientInput } from './client/MsgClientInput';
 import { ReqJoin, ResJoin } from './PtlJoin';
 import { MsgFrame } from './server/MsgFrame';
+import { MsgRandomMapdata } from './server/MsgRandomMapdata';
 
 export interface ServiceType {
     api: {
@@ -12,12 +13,13 @@ export interface ServiceType {
     },
     msg: {
         "client/ClientInput": MsgClientInput,
-        "server/Frame": MsgFrame
+        "server/Frame": MsgFrame,
+        "server/RandomMapdata": MsgRandomMapdata
     }
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 8,
+    "version": 9,
     "services": [
         {
             "id": 0,
@@ -32,6 +34,11 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 2,
             "name": "server/Frame",
+            "type": "msg"
+        },
+        {
+            "id": 3,
+            "name": "server/RandomMapdata",
             "type": "msg"
         }
     ],
@@ -689,6 +696,24 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "name": "dt",
                     "type": {
                         "type": "Number"
+                    }
+                }
+            ]
+        },
+        "server/MsgRandomMapdata/MsgRandomMapdata": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "randomData",
+                    "type": {
+                        "type": "Interface",
+                        "indexSignature": {
+                            "keyType": "String",
+                            "type": {
+                                "type": "Number"
+                            }
+                        }
                     }
                 }
             ]

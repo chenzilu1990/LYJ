@@ -36,6 +36,8 @@ export enum NodeType {
     HOME_WALL4 = 604,
     HOME_WALL5 = 605,
 
+    LONG1 = 701
+
 }
 
 

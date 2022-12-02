@@ -15,7 +15,8 @@ import MapParams from "./map/base/MapParams";
 import { GameManager } from "../scripts/models/GameManager";
 import Main from "./Main";
 import Joystick from "../scripts/Joystick";
-import LandNode from "./model/LandNode";
+import LandNode, { NodeType } from "./model/LandNode";
+import CH from "./CH/CH";
 
 // Learn TypeScript:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
@@ -64,7 +65,7 @@ export default class SceneMap extends cc.Component {
 
     private targetPos:cc.Vec2 = cc.Vec2.ZERO;
 
-    //private _mapData:MapData = null;
+    private _mapData:MapData = null;
 
     private _mapParams:MapParams = null;
 
@@ -112,7 +113,7 @@ export default class SceneMap extends cc.Component {
     public init(mapData:MapData,bgTex:cc.Texture2D,mapLoadModel:MapLoadModel = 1)
     {
         
-        //this._mapData = mapData;
+        this._mapData = mapData;
 
         MapRoadUtils.instance.updateMapInfo(mapData.mapWidth,mapData.mapHeight,mapData.nodeWidth,mapData.nodeHeight,mapData.type);
 
@@ -153,10 +154,12 @@ export default class SceneMap extends cc.Component {
                 
                 var node:RoadNode = MapRoadUtils.instance.getNodeByDerect(dx,dy);
                 node.value = value;
-
+                
                 this._roadDic[node.cx + "_" + node.cy] = node;
             }
         }
+
+        this.randomMapdata()
 
         if(mapData.type == MapType.honeycomb)
         {
@@ -172,6 +175,44 @@ export default class SceneMap extends cc.Component {
         this.node.height = this.mapLayer.height;
         this.joyStick.node.active = true
         
+
+    }
+
+    /**
+     * ger
+     */
+    public resDic:{[key:string]:number} = {};
+    public randomMapdata() {
+        const mapData = this._mapData
+        const len:number = mapData.roadDataArr.length;
+        const len2:number = mapData.roadDataArr[0].length;
+        
+        let value:number = 0;
+        let dx:number = 0;
+        let dy:number = 0;
+        var nodeType: NodeType = NodeType.canGo;
+        for(let i:number = 0 ; i < len ; i++)
+        {
+            for(let j:number = 0 ; j < len2 ; j++)
+            {
+                value = mapData.roadDataArr[i][j];
+                value = 0
+                dx = j;
+                dy = i;
+                
+                var node:RoadNode = MapRoadUtils.instance.getNodeByDerect(dx,dy);
+                node.value = value;
+
+                if (value == 1) {
+                    nodeType = NodeType.cantGo
+                } else {
+                    nodeType = CH.randomNodeType()
+                }
+                this.resDic[node.cx + "_" + node.cy] = nodeType;
+            }
+        }
+
+
 
     }
 

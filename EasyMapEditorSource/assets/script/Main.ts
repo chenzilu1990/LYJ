@@ -66,7 +66,7 @@ export default class Main extends cc.Component {
         });
         
         await this.gameManager.join();
-        cc.log("jio===============")
+
     }
     
     /**

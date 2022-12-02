@@ -13,6 +13,7 @@ const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class LandView extends cc.Component {
+	
     updateLandNode(node: LandNode) {
         this.landNode = node
     }
@@ -66,6 +67,58 @@ export default class LandView extends cc.Component {
         this.coordinate.string = value.toString()
     }
     
+    set nodeType(val: NodeType) {
+        if (val === NodeType.CY){
+            this.landRes.node.active = true
+            this.landRes.play('CS1')
+        } 
+        else if(val === NodeType.CY2 ) {
+            this.landRes.node.active = true
+            this.landRes.play('CS2')
+        } 
+        else if(val === NodeType.CY3 ) {
+            this.landRes.node.active = true
+            this.landRes.play('CS3')
+        } 
+        else if(val === NodeType.CY4 ) {
+            this.landRes.node.active = true
+            this.landRes.play('CS4')
+        } 
+        else if(val === NodeType.CY5 ) {
+            this.landRes.node.active = true
+            this.landRes.play('CS5')
+        } 
+
+        else 
+        if(val === NodeType.SD ) {
+            this.landRes.node.active = true
+            this.landRes.play('SD1')
+        } 
+        else if(val === NodeType.SD2 ) {
+            this.landRes.node.active = true
+            this.landRes.play('SD2')
+        } 
+        else if(val === NodeType.SD3 ) {
+            this.landRes.node.active = true
+            this.landRes.play('SD3')
+        } 
+        else if(val === NodeType.SD4 ) {
+            this.landRes.node.active = true
+            this.landRes.play('SD4')
+        } 
+        else if(val === NodeType.SD5 ) {
+            this.landRes.node.active = true
+            this.landRes.play('SD5')
+        } 
+        else if (val === NodeType.LONG1){
+            this.landRes.node.active = true
+            this.landRes.play('龙1')
+        }
+        else {
+            this.landRes.node.active = false
+
+        }
+    }
     
     private _landNode: LandNode = null
     set landNode(value: LandNode) {
