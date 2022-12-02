@@ -65,7 +65,7 @@ export default class CH {
         let cy2 = cy3 + 50
         let cy1 = cy2 + 50
 
-        let long1 = cy1 + 100
+        let long1 = cy1 + 20
 
         let type
         let r = Math.random() * 1000

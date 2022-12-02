@@ -154,7 +154,7 @@ export default class MapLayer extends cc.Component {
 						bitmap.node.y = this._sliceH * Math.floor(i / SLICE_H_NUM) + (i % SLICE_H_NUM) * this._mapParams.sliceHeight;
 
 
-						var root = "http://127.0.0.1:8080/"; //填写你的远程资源地址
+						var root = "http://192.168.31.122:8080/"; //填写你的远程资源地址
 
 						cc.loader.load(root + key + ".jpg",(err:Error,tex:cc.Texture2D)=>
 						{
@@ -190,12 +190,12 @@ export default class MapLayer extends cc.Component {
 		private optimize: boolean = true
 		@property(cc.Node)
 		private CardLayer: cc.Node = null;
-		public loadLandViews(px: number, py: number, position:cc.Vec2): void {
+		public loadLandViews(x:number, y:number): void {
 
 
-			let pointCenter = MapRoadUtils.instance.getWorldPointByPixel(position.x, position.y)
+			let pointCenter = MapRoadUtils.instance.getWorldPointByPixel(x, y)
 			
-			const hideWidth = 4
+			const hideWidth = 10
 			const left = pointCenter.x - hideWidth
 			const right = pointCenter.x + hideWidth
 			const down = pointCenter.y - hideWidth
@@ -268,7 +268,9 @@ export default class MapLayer extends cc.Component {
 					landV.node.x = x
 					landV.node.y = y
 					landV.roadNode = MapRoadUtils.instance.getNodeByWorldPoint(i, j)
+					
 					landV.nodeType = this.sceneMap.resDic[i+'_'+j]
+					// cc.log("update landV=====end")
 				}
 			}
 			// cc.log(this.CardLayer.children.length)

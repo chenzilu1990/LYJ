@@ -58,6 +58,8 @@ export class GameSystem {
             }
             player.targetX = input.targetX
             player.targetY = input.targetY
+            player.x = input.x
+            player.y = input.y
             player.moving = true
         }
         else if (input.type === 'PlayerPos'){
@@ -175,6 +177,8 @@ export interface MovePlyer {
     playerId: number,
     targetX: number,
     targetY: number,
+    x:number,
+    y:number,
 }
 
 export interface MoveEnd {

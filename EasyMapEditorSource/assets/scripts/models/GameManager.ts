@@ -1,6 +1,7 @@
 // import { MINIGAME } from 'cc/env';
 import { BaseWsClient } from 'tsrpc-base-client';
 import { WsClient as WsClientBrowser } from "tsrpc-browser";
+import SceneMap from '../../script/SceneMap';
 // import { WsClient as WsClientMiniapp } from "tsrpc-miniapp";
 import { GameSystem, GameSystemState } from "../shared/game/GameSystem";
 import { ClientInput, MsgClientInput } from "../shared/protocols/client/MsgClientInput";
@@ -88,7 +89,7 @@ export class GameManager {
 
     private _onServerRandom() {
         cc.log('_onServerRandom===')
-        
+        SceneMap.instance.randomMapdata()
     }
 
     private _onServerSync(frame: MsgFrame) {

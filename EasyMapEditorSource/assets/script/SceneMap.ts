@@ -77,8 +77,11 @@ export default class SceneMap extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
     private _selfSpeed?: cc.Vec2;
 
+    public static instance:SceneMap;
     onLoad () {
-                // 初始化摇杆
+
+        SceneMap.instance = this
+        // 初始化摇杆
         this.joyStick.options = {
 
             onOperate: v => {
@@ -183,6 +186,7 @@ export default class SceneMap extends cc.Component {
      */
     public resDic:{[key:string]:number} = {};
     public randomMapdata() {
+        cc.log('randomMapdata====start')
         const mapData = this._mapData
         const len:number = mapData.roadDataArr.length;
         const len2:number = mapData.roadDataArr[0].length;
@@ -211,7 +215,7 @@ export default class SceneMap extends cc.Component {
                 this.resDic[node.cx + "_" + node.cy] = nodeType;
             }
         }
-
+        cc.log('randomMapdata====end')
 
 
     }
@@ -275,7 +279,7 @@ export default class SceneMap extends cc.Component {
         {
             this.mapLayer.loadSliceImage(this.targetPos.x,this.targetPos.y);
         }
-        this.mapLayer.loadLandViews(this.targetPos.x,this.targetPos.y, this.player.node.position)
+        this.mapLayer.loadLandViews(this.player.node.x, this.player.node.y)
         
     }
 
@@ -360,7 +364,9 @@ export default class SceneMap extends cc.Component {
             this.gameManager.sendClientInput({
                 type: 'MovePlayer',
                 targetX:this._targetPos.x,
-                targetY:this._targetPos.y
+                targetY:this._targetPos.y,
+                x:this.player.node.x,
+                y:this.player.node.y
             })
             this._targetPos = undefined
         }
@@ -410,8 +416,14 @@ export default class SceneMap extends cc.Component {
 
 
             // 根据最新状态，更新 Player 表现组件
+            // if (playerId === this.gameManager.selfPlayerId){
 
-            this.movePlayer(playerId, playerState.targetX, playerState.targetY)
+                this.movePlayer(playerId, playerState.targetX, playerState.targetY)
+            // } else {
+
+            //     player.node.x = playerState.x
+            //     player.node.y = playerState.y
+            // }
 
 
         }
