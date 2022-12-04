@@ -17,6 +17,7 @@ import Main from "./Main";
 import Joystick from "../scripts/Joystick";
 import LandNode, { NodeType } from "./model/LandNode";
 import CH from "./CH/CH";
+import CardLayer from "./map/layer/CardLayer";
 
 // Learn TypeScript:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
@@ -43,6 +44,9 @@ export default class SceneMap extends cc.Component {
 
     @property(MapLayer)
     public mapLayer: MapLayer = null;
+
+    @property(CardLayer)
+    public cardLayer: CardLayer = null;
 
     @property(EntityLayer)
     public entityLayer: EntityLayer = null;
@@ -138,7 +142,8 @@ export default class SceneMap extends cc.Component {
         this._mapParams.mapLoadModel = mapLoadModel;
 
         this.mapLayer.init(this._mapParams, this);
-        
+        this.cardLayer.init(this._mapParams, this)
+
         var len:number = mapData.roadDataArr.length;
         var len2:number = mapData.roadDataArr[0].length;
         
@@ -279,7 +284,8 @@ export default class SceneMap extends cc.Component {
         {
             this.mapLayer.loadSliceImage(this.targetPos.x,this.targetPos.y);
         }
-        this.mapLayer.loadLandViews(this.player.node.x, this.player.node.y)
+        // this.mapLayer.loadLandViews(this.player.node.x, this.player.node.y)
+        this.cardLayer.loadLandViews(this.player.node.x, this.player.node.y)
         
     }
 
@@ -421,8 +427,8 @@ export default class SceneMap extends cc.Component {
                 this.movePlayer(playerId, playerState.targetX, playerState.targetY)
             // } else {
 
-            //     player.node.x = playerState.x
-            //     player.node.y = playerState.y
+                // player.node.x = playerState.x
+                // player.node.y = playerState.y
             // }
 
 
