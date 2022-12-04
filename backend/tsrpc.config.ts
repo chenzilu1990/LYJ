@@ -23,6 +23,11 @@ const tsrpcConf: TsrpcConfig = {
             from: 'src/shared',
             to: '../frontend/assets/scripts/shared',
             type: 'symlink'     // Change this to 'copy' if your environment not support symlink
+        },
+        {
+            from: 'src/shared',
+            to: '../RPGFramework_base_2.4.8/assets/scripts/shared',
+            type: 'symlink'     // Change this to 'copy' if your environment not support symlink
         }
     ],
     // Dev server

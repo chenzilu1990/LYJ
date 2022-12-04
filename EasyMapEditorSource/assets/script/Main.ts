@@ -13,7 +13,7 @@ import MapData from "./map/base/MapData";
 import { MapLoadModel } from "./map/base/MapLoadModel";
 import { GameManager } from "../scripts/models/GameManager";
 import  LoadMgr  from "../altLib/manager/LoadMgr";
-import GameConfig from "./GameConfig";
+
 const {ccclass, property} = cc._decorator;
 
 @ccclass
@@ -21,10 +21,6 @@ export default class Main extends cc.Component {
 
     @property(SceneMap)
     sceneMap: SceneMap = null;
-
-    
-    @property(cc.Prefab)
-    playerPrefab:cc.Prefab = null
     
     @property(cc.Node)
     splash: cc.Node = null;
