@@ -723,7 +723,6 @@
     "syncPlayers": {
       "__id__": 16
     },
-    "isFollowPlayer": true,
     "_id": "11DxM9C/1FnKaTtG4dw0fo"
   },
   {
@@ -778,7 +777,7 @@
         "__id__": 68
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 77

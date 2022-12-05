@@ -136,9 +136,9 @@ export default class NewClass extends cc.Component {
         }
 
 
-        // if (this._selfSpeed && this.player){
-        //     this._targetPos = this.player.node.position.addSelf(this._selfSpeed)
-        // }
+        if (this._selfSpeed && this.player){
+            this._targetPos = this.player.node.position.addSelf(this._selfSpeed)
+        }
         if (this._targetPos && this.player){
             cc.log("=============")
             this.gameManager.sendClientInput({
