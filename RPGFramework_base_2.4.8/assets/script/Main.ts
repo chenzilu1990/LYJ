@@ -35,13 +35,14 @@ export default class Main extends cc.Component {
         Main.instance = this
     }
 
+
     async start () {
 
+
+        // cc.director.getCollisionManager().enabled= false; //启用物理碰撞
         cc.debug.setDisplayStats(true);
 
-        cc.director.getCollisionManager().enabled= true; //启用物理碰撞
-        cc.debug.setDisplayStats(false);
-
+        this.splash.active = true
         await this._initGameManager()
         //this.loadSingleMap("10001"); //选择加载单张地图
         //this.loadSlicesMap("10001"); //选择分切片加载地图
@@ -143,7 +144,8 @@ export default class Main extends cc.Component {
                     console.log("加载小地图背景失败 path = ",bgPath,"error",error);
                     return;
                 }
-
+                this.splash.active = false
+                // this.sceneMap.node.active = true
                 this.sceneMap.init(mapData,tex,MapLoadModel.slices)
             });
 

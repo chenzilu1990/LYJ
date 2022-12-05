@@ -120,6 +120,9 @@ export default class MapLayer extends cc.Component {
 
 						cc.loader.loadRes("map/bg/" + this._mapParams.bgName + "/slices/" + key,cc.Texture2D,(error:Error,tex:cc.Texture2D)=>
 						{
+							cc.log("fjsd=============", tex)
+							cc.log("fjsd=============")
+							cc.log("fjsd=============")
 							bitmap.spriteFrame = new cc.SpriteFrame(tex);
 						});
 					}

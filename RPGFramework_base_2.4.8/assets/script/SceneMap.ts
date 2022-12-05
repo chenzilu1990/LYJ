@@ -14,6 +14,7 @@ import TransferDoor from "./game/transfer/TransferDoor";
 import Monster from "./game/character/Monster";
 import SpawnPoint from "./game/transfer/SpawnPoint";
 import CardLayer from "./map/layer/CardLayer";
+import Joystick from "../scripts/Joystick";
 
 // Learn TypeScript:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
@@ -50,6 +51,9 @@ export default class SceneMap extends cc.Component {
     @property(cc.Camera)
     private camera:cc.Camera = null;
 
+    @property(Joystick)
+    joyStick: Joystick = null
+
     @property()
     public isFollowPlayer:boolean = true;
 
@@ -84,8 +88,26 @@ export default class SceneMap extends cc.Component {
     public isInit:boolean = false;
 
     // LIFE-CYCLE CALLBACKS:
+    private _selfSpeed?: cc.Vec2;
+    public static instance:SceneMap;
+    onLoad () {
+        SceneMap.instance = this
+        // 初始化摇杆
+        this.joyStick.options = {
 
-    // onLoad () {}
+            onOperate: v => {
+                // cc.log(v)
+                if (!this._selfSpeed) {
+                    this._selfSpeed = new cc.Vec2();
+                }
+                this._selfSpeed = cc.v2(v.x, v.y);
+            },
+            
+            onOperateEnd: () => {
+                this._selfSpeed = undefined;
+            }
+        }
+    }
 
     start () {
 
@@ -155,7 +177,7 @@ export default class SceneMap extends cc.Component {
         //*************                                              *****************
         //*************                                              *****************
         //----------------------------------------------------------------------------
-
+        this.joyStick.node.active = true
     }
 
     /**

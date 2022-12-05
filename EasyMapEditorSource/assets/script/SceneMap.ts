@@ -76,7 +76,7 @@ export default class SceneMap extends cc.Component {
     public gameManager!: GameManager;
     
     @property(Joystick)
-    joyStick!: Joystick = null
+    joyStick!: Joystick
 
     // LIFE-CYCLE CALLBACKS:
     private _selfSpeed?: cc.Vec2;
