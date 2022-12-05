@@ -89,6 +89,7 @@ export default class Player extends Character {
     // playerName:cc.Label = null
     public setVisiable(visiable:boolean) {
         // this.playerName.node.active = visiable
+        this.nameTxt.node.active = visiable
         this.movieClip.node.active = visiable
     }
 }

@@ -322,6 +322,7 @@ export default class Character extends cc.Component {
      */
     public navTo(targetX:number,targetY:number)
     {
+        // this.stop()
         //var roadNodeArr:RoadNode[] = PathFindingAgent.instance.seekPath(this.node.position.x,this.node.position.y,targetX,targetY); //如果目标点是障碍，则寻路失败                               //按需求自选
         var roadNodeArr:RoadNode[] = PathFindingAgent.instance.seekPath2(this.node.position.x,this.node.position.y,targetX,targetY);  //如果目标点是障碍，则寻路到里目标点最近的一个非障碍点         //按需求自选
 
@@ -331,5 +332,6 @@ export default class Character extends cc.Component {
         }
     }
 
+    
 
 }

@@ -15,14 +15,15 @@ import EntityLayer from "./map/layer/EntityLayer";
 import MapRoadUtils from "./map/road/MapRoadUtils";
 import Point from "./map/road/Point";
 import RoadNode from "./map/road/RoadNode";
-import SceneMap from "./SceneMap";
 import SpawnPoint from "./game/transfer/SpawnPoint";
 import Player from "./game/character/Player";
+import SceneMap from "./SceneMap";
 
 const {ccclass, property} = cc._decorator;
 
 @ccclass
 export default class NewClass extends cc.Component {
+
     @property(cc.Camera)
     private camera:cc.Camera = null;
 
@@ -35,12 +36,11 @@ export default class NewClass extends cc.Component {
     @property(Joystick)
     joyStick: Joystick = null
 
-    @property(SceneMap)
-    sceneMap: SceneMap = null
+
     // LIFE-CYCLE CALLBACKS:
     private _selfSpeed?: cc.Vec3;
     public gameManager!: GameManager;
-    public player:Charactor = null;
+    public player:Player = null;
     onLoad () {
 
 
@@ -61,13 +61,14 @@ export default class NewClass extends cc.Component {
     }
 
     start () {
-        this.gameManager = Main.instance.gameManager
         this.node.on(cc.Node.EventType.TOUCH_START,this.onMapMouseDown,this);
-        this.scheduleOnce(()=>{
-            this.player = this.initPlayer(this.gameManager.selfPlayerId)
-        }, 1000)
     }
-
+    private sceneMap:SceneMap
+    init(sceneMap:SceneMap) {
+        this.sceneMap = sceneMap
+        this.gameManager = Main.instance.gameManager
+        this.isInit = true
+    }
     /**
      * 初始化玩家
      */
@@ -91,65 +92,53 @@ export default class NewClass extends cc.Component {
         var pos = this.camera.node.position.add(new cc.Vec3(event.getLocation().x,event.getLocation().y));
 
         this._targetPos = pos
-        this.player.navTo(pos.x, pos.y)
-        // this.movePlayer(this.gameManager.selfPlayerId, pos.x, pos.y);
-
-
+        // if (this.player) {
+        //     this.player.navTo(pos.x, pos.y)
+        // }
+        // if (this._targetPos && this.player){
+        //     cc.log("=============")
+        //     this.gameManager.sendClientInput({
+        //         type: 'MovePlayer',
+        //         targetX:this._targetPos.x,
+        //         targetY:this._targetPos.y,
+        //         x:this.player.node.x,
+        //         y:this.player.node.y
+        //     })
+        //     this._targetPos = undefined
+        // }
     }
 
     private targetPos:cc.Vec3
+
     /**
-     * 视图跟随玩家
-     * @param dt 
+     * 将视野对准玩家
      */
-    public followPlayer(dt:number)
+    public setViewToPlayer():void
     {
-        this.targetPos = this.player.node.position.sub(new cc.Vec3(cc.winSize.width / 2,cc.winSize.height / 2));
-
-        if(this.targetPos.x > this.sceneMap. mapParams.mapWidth - cc.winSize.width)
-        {
-            this.targetPos.x = this.sceneMap. mapParams.mapWidth - cc.winSize.width;
-        }else if(this.targetPos.x < 0)
-        {
-            this.targetPos.x = 0;
-            
-        }    
-
-        if(this.targetPos.y > this.sceneMap. mapParams.mapHeight - cc.winSize.height)
-        {
-            this.targetPos.y = this.sceneMap. mapParams.mapHeight - cc.winSize.height;
-        }else if(this.targetPos.y < 0)
-        {
-            this.targetPos.y = 0;
+        if (this.player){
+            this.sceneMap. setViewToPoint(this.player.node.x,this.player.node.y);
         }
-        
-
-        //摄像机平滑跟随
-        this.camera.node.position.lerp(this.targetPos,dt * 2.0,this.targetPos);
-        this.camera.node.position = this.targetPos;
-
-        if(this.sceneMap. mapParams.mapLoadModel == MapLoadModel.slices)
-        {
-            this.sceneMap. mapLayer.loadSliceImage(this.targetPos.x,this.targetPos.y);
-        }
-        this.sceneMap. cardLayer.loadLandViews(this.player.node.x, this.player.node.y)
     }
 
     @property()
     public isFollowPlayer:boolean = true;
+
+    public isInit:boolean = false;
     update (dt) {
-        
-        if(this.isFollowPlayer && this.player)
+        if(!this.isInit)
         {
-            this.followPlayer(dt);
-
-            //this.camera.node.position = this.player.node.position.sub(cc.v2(cc.visibleRect.width / 2,cc.visibleRect.height / 2));
-
+            return;
         }
 
-        if (this._selfSpeed && this.player){
-            this._targetPos = this.player.node.position.addSelf(this._selfSpeed)
+        if(this.isFollowPlayer)
+        {
+            this.sceneMap.followPlayer(dt, this.player);
         }
+
+
+        // if (this._selfSpeed && this.player){
+        //     this._targetPos = this.player.node.position.addSelf(this._selfSpeed)
+        // }
         if (this._targetPos && this.player){
             cc.log("=============")
             this.gameManager.sendClientInput({
@@ -161,11 +150,10 @@ export default class NewClass extends cc.Component {
             })
             this._targetPos = undefined
         }
-        // Send Inputs
-        this.gameManager.localTimePast();
+        // this.gameManager.localTimePast();
 
 
-        // this._updatePlayers();
+        this._updatePlayers();
     }
 
     public players:{[key:number]:Player} = {};
@@ -178,13 +166,10 @@ export default class NewClass extends cc.Component {
             let player = this.players[playerId];
             // 场景上还没有这个 Player，新建之
             if (!player) {
-                let playerNode = cc.instantiate(this.playerPrefab);
-                this.entityLayer.node.addChild(playerNode);
                 player = this.players[playerId] = this.initPlayer(playerId);
-                // player.sceneMap = this.sceneMap
                 player.id = playerId
-                playerNode.x = playerState.x
-                playerNode.y = playerState.y
+                player.node.x = playerState.x
+                player.node.y = playerState.y
                 // 摄像机拍摄自己
                 if (playerId === this.gameManager.selfPlayerId) {
                     this.player = player
@@ -202,18 +187,8 @@ export default class NewClass extends cc.Component {
                         player.setVisiable(true)
                     }
             }
-
-
             // 根据最新状态，更新 Player 表现组件
-            // if (playerId === this.gameManager.selfPlayerId){
             player.navTo(playerState.targetX, playerState.targetY)
-                // this.movePlayer(playerId, playerState.targetX, playerState.targetY)
-            // } else {
-
-                // player.node.x = playerState.x
-                // player.node.y = playerState.y
-            // }
-
 
         }
 

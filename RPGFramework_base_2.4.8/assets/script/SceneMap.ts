@@ -14,8 +14,7 @@ import TransferDoor from "./game/transfer/TransferDoor";
 import Monster from "./game/character/Monster";
 import SpawnPoint from "./game/transfer/SpawnPoint";
 import CardLayer from "./map/layer/CardLayer";
-import Joystick from "../scripts/Joystick";
-
+import SyncPlayers from "./SyncPlayers";
 // Learn TypeScript:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/typescript.html
@@ -51,9 +50,11 @@ export default class SceneMap extends cc.Component {
     @property(cc.Camera)
     private camera:cc.Camera = null;
 
+    @property(SyncPlayers)
+    public syncPlayers:SyncPlayers = null;
 
-    @property()
-    public isFollowPlayer:boolean = true;
+    // @property()
+    // public isFollowPlayer:boolean = true;
 
     private player:Player = null;
 
@@ -92,9 +93,12 @@ export default class SceneMap extends cc.Component {
     public static instance:SceneMap;
     onLoad () {
         SceneMap.instance = this
+        
     }
-
+    
     start () {
+        // this.syncPlayers = this.getComponent(SyncPlayers)
+        
 
         this.node.x = -cc.winSize.width / 2;
         this.node.y = -cc.winSize.height / 2;
@@ -149,9 +153,11 @@ export default class SceneMap extends cc.Component {
 
         this.initMapElement(); //初始化编辑的地图元素
         this.afterInitMapElement(); //编辑的地图元素后处理
-        this.initPlayer(); //初始化玩家
-        this.setViewToPlayer(); //将视野对准玩家
+        // this.initPlayer(); //初始化玩家
+        // this.setViewToPlayer(); //将视野对准玩家
+        this.setViewToPoint(this.mapParams.mapWidth/2, this.mapParams.mapHeight/2)
         this.isInit = true;
+        this.syncPlayers.init(this)
 
         //-----------------该地图系统能应对很多种类型的游戏，能应对RPG，SLG，RTS游戏，还可以应对农场类，经营类需要用到地图的游戏--------------------
 
@@ -341,9 +347,10 @@ private initSpawnPoint(editData:EditSpawnPointData)
      * 视图跟随玩家
      * @param dt 
      */
-    public followPlayer(dt:number)
+    public followPlayer(dt:number, player:Player)
     {
-        this.targetPos = this.player.node.position.sub(new cc.Vec3(cc.winSize.width / 2,cc.winSize.height / 2));
+        if (!player) return
+        this.targetPos = player.node.position.sub(new cc.Vec3(cc.winSize.width / 2,cc.winSize.height / 2));
 
         if(this.targetPos.x > this._mapParams.mapWidth - cc.winSize.width)
         {
@@ -371,7 +378,7 @@ private initSpawnPoint(editData:EditSpawnPointData)
         {
             this.mapLayer.loadSliceImage(this.targetPos.x,this.targetPos.y);
         }
-        this.cardLayer.loadLandViews(this.player.node.x, this.player.node.y)
+        // this.cardLayer.loadLandViews(player.node.x, player.node.y)
     }
 
     /**
@@ -414,7 +421,10 @@ private initSpawnPoint(editData:EditSpawnPointData)
      */
     public setViewToPlayer():void
     {
-        this.setViewToPoint(this.player.node.x,this.player.node.y);
+        if (this.player){
+
+            this.setViewToPoint(this.player.node.x,this.player.node.y);
+        }
     }
 
 
@@ -425,9 +435,9 @@ private initSpawnPoint(editData:EditSpawnPointData)
             return;
         }
 
-        if(this.isFollowPlayer)
-        {
-            // this.followPlayer(dt);
-        }
+        // if(this.isFollowPlayer)
+        // {
+        //     this.followPlayer(dt, this.player);
+        // }
     }
 }
