@@ -149,8 +149,8 @@ export default class SceneMap extends cc.Component {
 
         this.initMapElement(); //初始化编辑的地图元素
         this.afterInitMapElement(); //编辑的地图元素后处理
-        // this.initPlayer(); //初始化玩家
-        // this.setViewToPlayer(); //将视野对准玩家
+        this.initPlayer(); //初始化玩家
+        this.setViewToPlayer(); //将视野对准玩家
         this.isInit = true;
 
         //-----------------该地图系统能应对很多种类型的游戏，能应对RPG，SLG，RTS游戏，还可以应对农场类，经营类需要用到地图的游戏--------------------

@@ -15,7 +15,7 @@ const {ccclass, property} = cc._decorator;
  */
 @ccclass
 export default class Player extends Character {
-
+    public id:number = 0
     
     // LIFE-CYCLE CALLBACKS:
 
@@ -83,5 +83,12 @@ export default class Player extends Character {
                 transferDoor.onTriggerExit(this);
             }
         }
+    }
+
+    // @property(cc.Label)
+    // playerName:cc.Label = null
+    public setVisiable(visiable:boolean) {
+        // this.playerName.node.active = visiable
+        this.movieClip.node.active = visiable
     }
 }

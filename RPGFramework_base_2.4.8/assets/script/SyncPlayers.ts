@@ -17,6 +17,7 @@ import Point from "./map/road/Point";
 import RoadNode from "./map/road/RoadNode";
 import SceneMap from "./SceneMap";
 import SpawnPoint from "./game/transfer/SpawnPoint";
+import Player from "./game/character/Player";
 
 const {ccclass, property} = cc._decorator;
 
@@ -62,6 +63,9 @@ export default class NewClass extends cc.Component {
     start () {
         this.gameManager = Main.instance.gameManager
         this.node.on(cc.Node.EventType.TOUCH_START,this.onMapMouseDown,this);
+        this.scheduleOnce(()=>{
+            this.player = this.initPlayer(this.gameManager.selfPlayerId)
+        }, 1000)
     }
 
     /**
@@ -73,8 +77,8 @@ export default class NewClass extends cc.Component {
 
         let player = GameMgr.instance.getPlayer();
         player.objName = player.objName + id
-         player.node.parent = this.entityLayer.node;
-         player.node.position = spawnPoint != null ? spawnPoint.node.position : new cc.Vec3(1000,1000); //如果找得到出生点就初始化在出生点的位置，否则默认一个出生位置点给玩家，防止报错。
+        player.node.parent = this.entityLayer.node;
+        player.node.position = spawnPoint != null ? spawnPoint.node.position : new cc.Vec3(1000,1000); //如果找得到出生点就初始化在出生点的位置，否则默认一个出生位置点给玩家，防止报错。
         return player
     }
 
@@ -87,30 +91,33 @@ export default class NewClass extends cc.Component {
         var pos = this.camera.node.position.add(new cc.Vec3(event.getLocation().x,event.getLocation().y));
 
         this._targetPos = pos
-
+        this.player.navTo(pos.x, pos.y)
         // this.movePlayer(this.gameManager.selfPlayerId, pos.x, pos.y);
 
 
     }
 
     private targetPos:cc.Vec3
+    /**
+     * 视图跟随玩家
+     * @param dt 
+     */
     public followPlayer(dt:number)
     {
-        if (!this.player) return
-        // cc.log(this.player.node.x, this.player.node.y)
-        this.targetPos = this.player.node.position.sub(cc.v3(cc.visibleRect.width / 2,cc.visibleRect.height / 2));
+        this.targetPos = this.player.node.position.sub(new cc.Vec3(cc.winSize.width / 2,cc.winSize.height / 2));
 
-        if(this.targetPos.x > this.sceneMap. mapParams.mapWidth - cc.visibleRect.width)
+        if(this.targetPos.x > this.sceneMap. mapParams.mapWidth - cc.winSize.width)
         {
-            this.targetPos.x = this.sceneMap. mapParams.mapWidth - cc.visibleRect.width;
+            this.targetPos.x = this.sceneMap. mapParams.mapWidth - cc.winSize.width;
         }else if(this.targetPos.x < 0)
         {
             this.targetPos.x = 0;
+            
         }    
 
-        if(this.targetPos.y > this.sceneMap. mapParams.mapHeight - cc.visibleRect.height)
+        if(this.targetPos.y > this.sceneMap. mapParams.mapHeight - cc.winSize.height)
         {
-            this.targetPos.y = this.sceneMap. mapParams.mapHeight - cc.visibleRect.height;
+            this.targetPos.y = this.sceneMap. mapParams.mapHeight - cc.winSize.height;
         }else if(this.targetPos.y < 0)
         {
             this.targetPos.y = 0;
@@ -125,15 +132,14 @@ export default class NewClass extends cc.Component {
         {
             this.sceneMap. mapLayer.loadSliceImage(this.targetPos.x,this.targetPos.y);
         }
-        // this.mapLayer.loadLandViews(this.player.node.x, this.player.node.y)
-        // this.sceneMap. cardLayer.loadLandViews(this.player.node.x, this.player.node.y)
-        
+        this.sceneMap. cardLayer.loadLandViews(this.player.node.x, this.player.node.y)
     }
+
     @property()
     public isFollowPlayer:boolean = true;
     update (dt) {
         
-        if(this.isFollowPlayer)
+        if(this.isFollowPlayer && this.player)
         {
             this.followPlayer(dt);
 
@@ -144,7 +150,7 @@ export default class NewClass extends cc.Component {
         if (this._selfSpeed && this.player){
             this._targetPos = this.player.node.position.addSelf(this._selfSpeed)
         }
-        if (this._targetPos){
+        if (this._targetPos && this.player){
             cc.log("=============")
             this.gameManager.sendClientInput({
                 type: 'MovePlayer',
@@ -159,10 +165,10 @@ export default class NewClass extends cc.Component {
         this.gameManager.localTimePast();
 
 
-        this._updatePlayers();
+        // this._updatePlayers();
     }
 
-    public players:{[key:number]:Charactor} = {};
+    public players:{[key:number]:Player} = {};
     private _updatePlayers() {
         // Update pos
         let playerStates = this.gameManager.state.players;
@@ -212,13 +218,14 @@ export default class NewClass extends cc.Component {
         }
 
         // Clear left players
-        // for (let i = this.entityLayer.node.children.length - 1; i > -1; --i) {
-        //     let player = this.entityLayer.node.children[i].getComponent(Charactor)!;
-        //     if (!this.gameManager.state.players.find(v => v.id === player.id)) {
-        //         player.node.removeFromParent();
-        //         delete this.players[player.id];
-        //     }
-        // }
+        let playerList = this.getComponentsInChildren(Player)
+        for (let i = playerList.length - 1; i > -1; --i) {
+            let player = playerList[i]
+            if (!this.gameManager.state.players.find(v => v.id === player.id)) {
+                player.node.removeFromParent();
+                delete this.players[player.id];
+            }
+        }
     }
 
 

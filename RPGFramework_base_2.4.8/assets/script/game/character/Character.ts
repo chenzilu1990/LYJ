@@ -46,7 +46,7 @@ export enum CharacterState
 
 @ccclass
 export default class Character extends cc.Component {
-    public id:number = 0
+    
     /**
      * 单位名字文本
      */
@@ -331,10 +331,5 @@ export default class Character extends cc.Component {
         }
     }
 
-    // @property(cc.Label)
-    // playerName:cc.Label = null
-    public setVisiable(visiable:boolean) {
-        // this.playerName.node.active = visiable
-        this.movieClip.node.active = visiable
-    }
+
 }
