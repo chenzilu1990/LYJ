@@ -188,7 +188,15 @@ export default class NewClass extends cc.Component {
                     }
             }
             // 根据最新状态，更新 Player 表现组件
-            player.navTo(playerState.targetX, playerState.targetY)
+            let playerWorldP = MapRoadUtils.instance.getWorldPointByPixel(player.node.x, player.node.y)
+            let playerTargetP = MapRoadUtils.instance.getWorldPointByPixel(playerState.targetX, playerState.targetY)
+
+            if (playerWorldP.x === playerTargetP.x &&  playerWorldP.y === playerTargetP.y){
+
+            } else {
+                player.navTo(playerState.targetX, playerState.targetY)
+
+            }
 
         }
 

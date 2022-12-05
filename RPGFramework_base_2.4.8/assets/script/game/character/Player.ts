@@ -5,6 +5,8 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import PathFindingAgent from "../../map/road/PathFindingAgent";
+import RoadNode from "../../map/road/RoadNode";
 import TransferDoor from "../transfer/TransferDoor";
 import Character, { CharacterState } from "./Character";
 
@@ -91,5 +93,18 @@ export default class Player extends Character {
         // this.playerName.node.active = visiable
         this.nameTxt.node.active = visiable
         this.movieClip.node.active = visiable
+    }
+
+    public navTo(targetX:number,targetY:number)
+    {
+        // this.stop()
+        //var roadNodeArr:RoadNode[] = PathFindingAgent.instance.seekPath(this.node.position.x,this.node.position.y,targetX,targetY); //如果目标点是障碍，则寻路失败                               //按需求自选
+        var roadNodeArr:RoadNode[] = PathFindingAgent.instance.seekPath2(this.node.position.x,this.node.position.y,targetX,targetY);  //如果目标点是障碍，则寻路到里目标点最近的一个非障碍点         //按需求自选
+
+        if(roadNodeArr.length > 0)
+        {
+            cc.log("fjs=======", roadNodeArr.length)
+            this.walkByRoad(roadNodeArr);
+        }
     }
 }

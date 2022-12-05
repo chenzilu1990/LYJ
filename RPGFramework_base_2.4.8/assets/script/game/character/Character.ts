@@ -332,6 +332,6 @@ export default class Character extends cc.Component {
         }
     }
 
-    
+
 
 }
