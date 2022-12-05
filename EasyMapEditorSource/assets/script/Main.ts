@@ -60,7 +60,7 @@ export default class Main extends cc.Component {
             }, 2000)
             return v;
         });
-        
+        // 
         await this.gameManager.join();
 
     }

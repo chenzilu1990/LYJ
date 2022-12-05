@@ -51,8 +51,6 @@ export default class SceneMap extends cc.Component {
     @property(cc.Camera)
     private camera:cc.Camera = null;
 
-    @property(Joystick)
-    joyStick: Joystick = null
 
     @property()
     public isFollowPlayer:boolean = true;
@@ -64,7 +62,9 @@ export default class SceneMap extends cc.Component {
     private _mapData:MapData = null;
 
     private _mapParams:MapParams = null;
-
+    public get mapParams():MapParams {
+        return this._mapParams
+    }
     /**
      * 场景里所有的出生点
      */
@@ -92,21 +92,6 @@ export default class SceneMap extends cc.Component {
     public static instance:SceneMap;
     onLoad () {
         SceneMap.instance = this
-        // 初始化摇杆
-        this.joyStick.options = {
-
-            onOperate: v => {
-                // cc.log(v)
-                if (!this._selfSpeed) {
-                    this._selfSpeed = new cc.Vec2();
-                }
-                this._selfSpeed = cc.v2(v.x, v.y);
-            },
-            
-            onOperateEnd: () => {
-                this._selfSpeed = undefined;
-            }
-        }
     }
 
     start () {
@@ -164,8 +149,8 @@ export default class SceneMap extends cc.Component {
 
         this.initMapElement(); //初始化编辑的地图元素
         this.afterInitMapElement(); //编辑的地图元素后处理
-        this.initPlayer(); //初始化玩家
-        this.setViewToPlayer(); //将视野对准玩家
+        // this.initPlayer(); //初始化玩家
+        // this.setViewToPlayer(); //将视野对准玩家
         this.isInit = true;
 
         //-----------------该地图系统能应对很多种类型的游戏，能应对RPG，SLG，RTS游戏，还可以应对农场类，经营类需要用到地图的游戏--------------------
@@ -177,7 +162,7 @@ export default class SceneMap extends cc.Component {
         //*************                                              *****************
         //*************                                              *****************
         //----------------------------------------------------------------------------
-        this.joyStick.node.active = true
+        
     }
 
     /**
@@ -280,7 +265,7 @@ private initSpawnPoint(editData:EditSpawnPointData)
 
         this.player = GameManager.instance.getPlayer();
         this.player.node.parent = this.entityLayer.node;
-        this.player.node.position = spawnPoint != null ? spawnPoint.node.position : new cc.Vec3(1000,1000,0); //如果找得到出生点就初始化在出生点的位置，否则默认一个出生位置点给玩家，防止报错。
+        this.player.node.position = spawnPoint != null ? spawnPoint.node.position : new cc.Vec3(1000,1000); //如果找得到出生点就初始化在出生点的位置，否则默认一个出生位置点给玩家，防止报错。
     }
 
     /**
@@ -347,7 +332,9 @@ private initSpawnPoint(editData:EditSpawnPointData)
     {
         //var pos = this.node.convertToNodeSpaceAR(event.getLocation());
         var pos = this.camera.node.position.add(new cc.Vec3(event.getLocation().x,event.getLocation().y));
-        this.player.navTo(pos.x,pos.y);
+        if (this.player){
+            this.player.navTo(pos.x,pos.y);
+        }
     }
 
     /**
@@ -440,7 +427,7 @@ private initSpawnPoint(editData:EditSpawnPointData)
 
         if(this.isFollowPlayer)
         {
-            this.followPlayer(dt);
+            // this.followPlayer(dt);
         }
     }
 }

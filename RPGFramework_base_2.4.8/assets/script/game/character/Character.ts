@@ -46,7 +46,7 @@ export enum CharacterState
 
 @ccclass
 export default class Character extends cc.Component {
-
+    public id:number = 0
     /**
      * 单位名字文本
      */
@@ -187,7 +187,7 @@ export default class Character extends cc.Component {
     // onLoad () {}
 
     start () {
-
+        this.nameTxt
         this.state = CharacterState.idle; //默认待机状态
 
     }
@@ -329,5 +329,12 @@ export default class Character extends cc.Component {
         {
             this.walkByRoad(roadNodeArr);
         }
+    }
+
+    // @property(cc.Label)
+    // playerName:cc.Label = null
+    public setVisiable(visiable:boolean) {
+        // this.playerName.node.active = visiable
+        this.movieClip.node.active = visiable
     }
 }
