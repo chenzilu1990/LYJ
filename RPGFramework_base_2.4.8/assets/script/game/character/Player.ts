@@ -5,6 +5,7 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import MapRoadUtils from "../../map/road/MapRoadUtils";
 import PathFindingAgent from "../../map/road/PathFindingAgent";
 import RoadNode from "../../map/road/RoadNode";
 import TransferDoor from "../transfer/TransferDoor";
@@ -95,16 +96,15 @@ export default class Player extends Character {
         this.movieClip.node.active = visiable
     }
 
+    private _preX = 0; _preY = 0;
     public navTo(targetX:number,targetY:number)
     {
+        let playerTargetP = MapRoadUtils.instance.getWorldPointByPixel(targetX, targetY)
+        // cc.log(playerTargetP.x , this._preX, playerTargetP.y , this._preY)
+        if (playerTargetP.x === this._preX && playerTargetP.y === this._preY) return
+        this._preX = playerTargetP.x
+        this._preY = playerTargetP.y
         // this.stop()
-        //var roadNodeArr:RoadNode[] = PathFindingAgent.instance.seekPath(this.node.position.x,this.node.position.y,targetX,targetY); //如果目标点是障碍，则寻路失败                               //按需求自选
-        var roadNodeArr:RoadNode[] = PathFindingAgent.instance.seekPath2(this.node.position.x,this.node.position.y,targetX,targetY);  //如果目标点是障碍，则寻路到里目标点最近的一个非障碍点         //按需求自选
-
-        if(roadNodeArr.length > 0)
-        {
-            cc.log("fjs=======", roadNodeArr.length)
-            this.walkByRoad(roadNodeArr);
-        }
+        super.navTo(targetX, targetY)
     }
 }

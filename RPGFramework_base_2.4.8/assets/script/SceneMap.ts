@@ -378,7 +378,7 @@ private initSpawnPoint(editData:EditSpawnPointData)
         {
             this.mapLayer.loadSliceImage(this.targetPos.x,this.targetPos.y);
         }
-        // this.cardLayer.loadLandViews(player.node.x, player.node.y)
+        this.cardLayer.loadLandViews(player.node.x, player.node.y)
     }
 
     /**

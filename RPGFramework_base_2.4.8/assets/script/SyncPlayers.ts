@@ -92,20 +92,8 @@ export default class NewClass extends cc.Component {
         var pos = this.camera.node.position.add(new cc.Vec3(event.getLocation().x,event.getLocation().y));
 
         this._targetPos = pos
-        // if (this.player) {
-        //     this.player.navTo(pos.x, pos.y)
-        // }
-        // if (this._targetPos && this.player){
-        //     cc.log("=============")
-        //     this.gameManager.sendClientInput({
-        //         type: 'MovePlayer',
-        //         targetX:this._targetPos.x,
-        //         targetY:this._targetPos.y,
-        //         x:this.player.node.x,
-        //         y:this.player.node.y
-        //     })
-        //     this._targetPos = undefined
-        // }
+
+        
     }
 
     private targetPos:cc.Vec3
@@ -140,7 +128,6 @@ export default class NewClass extends cc.Component {
             this._targetPos = this.player.node.position.addSelf(this._selfSpeed)
         }
         if (this._targetPos && this.player){
-            cc.log("=============")
             this.gameManager.sendClientInput({
                 type: 'MovePlayer',
                 targetX:this._targetPos.x,
@@ -195,11 +182,8 @@ export default class NewClass extends cc.Component {
 
             } else {
                 player.navTo(playerState.targetX, playerState.targetY)
-
             }
-
         }
-
         // Clear left players
         let playerList = this.getComponentsInChildren(Player)
         for (let i = playerList.length - 1; i > -1; --i) {
