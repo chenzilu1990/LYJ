@@ -17,6 +17,7 @@ import Main from "./Main";
 import Joystick from "../scripts/Joystick";
 import LandNode, { NodeType } from "./model/LandNode";
 import CH from "./CH/CH";
+import CardLayer from "./map/layer/CardLayer";
 
 // Learn TypeScript:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
@@ -44,11 +45,14 @@ export default class SceneMap extends cc.Component {
     @property(MapLayer)
     public mapLayer: MapLayer = null;
 
+    @property(CardLayer)
+    public cardLayer: CardLayer = null;
+
     @property(EntityLayer)
     public entityLayer: EntityLayer = null;
 
     // @property(Charactor)
-    private player:Charactor = null;
+    public player:Charactor = null;
 
     @property(cc.Camera)
     private camera:cc.Camera = null;
@@ -60,19 +64,26 @@ export default class SceneMap extends cc.Component {
     playerPrefab:cc.Prefab = null
 
     private _roadDic:{[key:string]:RoadNode} = {};
+    public get roadDic():{[key:string]:RoadNode} {
+        return this._roadDic
+    }
 
     private _roadSeeker:IRoadSeeker;
-
+    public get roadSeeker():IRoadSeeker  {
+        return this._roadSeeker
+    }
     private targetPos:cc.Vec2 = cc.Vec2.ZERO;
 
     private _mapData:MapData = null;
 
     private _mapParams:MapParams = null;
-
+    public get mapParams():MapParams  {
+        return this._mapParams
+    }
     public gameManager!: GameManager;
     
     @property(Joystick)
-    joyStick!: Joystick = null
+    joyStick: Joystick = null
 
     // LIFE-CYCLE CALLBACKS:
     private _selfSpeed?: cc.Vec2;
@@ -138,7 +149,8 @@ export default class SceneMap extends cc.Component {
         this._mapParams.mapLoadModel = mapLoadModel;
 
         this.mapLayer.init(this._mapParams, this);
-        
+        this.cardLayer.init(this._mapParams, this)
+
         var len:number = mapData.roadDataArr.length;
         var len2:number = mapData.roadDataArr[0].length;
         
@@ -279,7 +291,8 @@ export default class SceneMap extends cc.Component {
         {
             this.mapLayer.loadSliceImage(this.targetPos.x,this.targetPos.y);
         }
-        this.mapLayer.loadLandViews(this.player.node.x, this.player.node.y)
+        // this.mapLayer.loadLandViews(this.player.node.x, this.player.node.y)
+        this.cardLayer.loadLandViews(this.player.node.x, this.player.node.y)
         
     }
 
@@ -356,26 +369,26 @@ export default class SceneMap extends cc.Component {
 
         }
 
-        if (this._selfSpeed && this.player){
-            this._targetPos = this.player.node.position.addSelf(this._selfSpeed)
-        }
-        if (this._targetPos){
-            cc.log("=============")
-            this.gameManager.sendClientInput({
-                type: 'MovePlayer',
-                targetX:this._targetPos.x,
-                targetY:this._targetPos.y,
-                x:this.player.node.x,
-                y:this.player.node.y
-            })
-            this._targetPos = undefined
-        }
+        // if (this._selfSpeed && this.player){
+        //     this._targetPos = this.player.node.position.addSelf(this._selfSpeed)
+        // }
+        // if (this._targetPos){
+        //     cc.log("=============")
+        //     this.gameManager.sendClientInput({
+        //         type: 'MovePlayer',
+        //         targetX:this._targetPos.x,
+        //         targetY:this._targetPos.y,
+        //         x:this.player.node.x,
+        //         y:this.player.node.y
+        //     })
+        //     this._targetPos = undefined
+        // }
 
         // Send Inputs
-        this.gameManager.localTimePast();
+        // this.gameManager.localTimePast();
 
 
-        this._updatePlayers();
+        // this._updatePlayers();
 
     }
 
@@ -421,8 +434,8 @@ export default class SceneMap extends cc.Component {
                 this.movePlayer(playerId, playerState.targetX, playerState.targetY)
             // } else {
 
-            //     player.node.x = playerState.x
-            //     player.node.y = playerState.y
+                // player.node.x = playerState.x
+                // player.node.y = playerState.y
             // }
 
 

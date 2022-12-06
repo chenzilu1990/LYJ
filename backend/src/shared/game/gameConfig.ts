@@ -12,9 +12,9 @@ export const gameConfig = {
     // 被箭矢几种后的晕眩时间（毫秒）
     arrowDizzyTime: 1000,
 
-    mapWidth:40000, 
+    mapWidth:3300, 
 
-    mapHeight:27200,
+    mapHeight:2080,
 
     randomInterval: 5,
 }
