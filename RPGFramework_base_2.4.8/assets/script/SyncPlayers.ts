@@ -18,6 +18,7 @@ import RoadNode from "./map/road/RoadNode";
 import SpawnPoint from "./game/transfer/SpawnPoint";
 import Player from "./game/character/Player";
 import SceneMap from "./SceneMap";
+import MapParams from "./map/base/MapParams";
 
 const {ccclass, property} = cc._decorator;
 
@@ -152,6 +153,19 @@ export default class NewClass extends cc.Component {
         for (let playerState of playerStates) {
             let playerId = playerState.id
             let player = this.players[playerId];
+
+            let mapId = playerState.mapId
+            let spawnId = playerState.spawnId
+            if (mapId != this.sceneMap.mapParams.name){
+
+                if (player) {
+                    player.node.removeFromParent()
+                    delete this.players[playerState.id]
+
+                }
+                continue
+            }
+
             // 场景上还没有这个 Player，新建之
             if (!player) {
                 player = this.players[playerId] = this.initPlayer(playerId);
@@ -184,6 +198,8 @@ export default class NewClass extends cc.Component {
             } else {
                 player.navTo(playerState.targetX, playerState.targetY)
             }
+
+
         }
         // Clear left players
         let playerList = this.getComponentsInChildren(Player)
@@ -194,6 +210,8 @@ export default class NewClass extends cc.Component {
                 delete this.players[player.id];
             }
         }
+
+        
         // cc.log(this.players)
     }
 

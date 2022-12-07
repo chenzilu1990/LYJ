@@ -12,6 +12,7 @@ import { EditTransferData } from "../../editObjData/EditObjData";
 import Main from "../../Main";
 import { MapLoadModel } from "../../map/base/MapLoadModel";
 import MapRoadUtils from "../../map/road/MapRoadUtils";
+import SceneMap from "../../SceneMap";
 import Player from "../character/Player";
 
 
@@ -116,9 +117,14 @@ export default class TransferDoor extends cc.Component {
      */
     public onTriggerEnter(player:Player)
     {
-        if(player != null)
+        if(player != null && player.id === Main.instance.gameManager.selfPlayerId)
         {
             console.log("跳转到地图",this.targetMapId, this.targetMapSpawnId);
+            Main.instance.gameManager.sendClientInput({
+              type: 'TransMap',
+              mapId: this.targetMapId,
+              spawnId: this.targetMapSpawnId  
+            })
             Main.instance.loadMap(this.targetMapId.toString(), MapLoadModel.slices)
         }
     }

@@ -19,7 +19,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 11,
+    "version": 14,
     "services": [
         {
             "id": 0,
@@ -127,6 +127,19 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "target": {
                             "type": "Reference",
                             "target": "../game/GameSystem/PlayerPos"
+                        },
+                        "keys": [
+                            "playerId"
+                        ],
+                        "type": "Omit"
+                    }
+                },
+                {
+                    "id": 5,
+                    "type": {
+                        "target": {
+                            "type": "Reference",
+                            "target": "../game/GameSystem/TransMap"
                         },
                         "keys": [
                             "playerId"
@@ -345,6 +358,40 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
+        "../game/GameSystem/TransMap": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "type",
+                    "type": {
+                        "type": "Literal",
+                        "literal": "TransMap"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "playerId",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "mapId",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "spawnId",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
         "PtlJoin/ReqJoin": {
             "type": "Interface"
         },
@@ -507,7 +554,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "id": 10,
                     "name": "mapId",
                     "type": {
-                        "type": "Number"
+                        "type": "String"
                     }
                 },
                 {
@@ -582,7 +629,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "id": 1,
                     "name": "mapId",
                     "type": {
-                        "type": "Number"
+                        "type": "String"
                     }
                 },
                 {
@@ -675,6 +722,13 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "Reference",
                         "target": "../game/GameSystem/MoveEnd"
+                    }
+                },
+                {
+                    "id": 8,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../game/GameSystem/TransMap"
                     }
                 }
             ]

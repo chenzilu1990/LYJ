@@ -10,7 +10,7 @@ import { serviceProto, ServiceType } from "../shared/protocols/serviceProto";
 export interface PlayerInfo {
    playerId:number,
 
-   mapId:number,
+   mapId:string,
 
    spawnId:number
 }

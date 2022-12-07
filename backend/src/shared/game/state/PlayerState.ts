@@ -10,6 +10,6 @@ export interface PlayerState {
     moving:boolean,
     x:number, 
     y:number,
-    mapId:number,
+    mapId:string,
     spawnId:number
 }

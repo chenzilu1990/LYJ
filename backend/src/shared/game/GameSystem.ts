@@ -104,6 +104,13 @@ export class GameSystem {
                 spawnId:gameConfig.spawnId
             })
         }
+        else if (input.type === 'TransMap') {
+            let player = this._state.players.find( v => v.id === input.playerId)
+            if (!player) return
+            player.mapId = input.mapId
+            player.spawnId = input.spawnId
+
+        }
         else if (input.type === 'PlayerLeave') {
             
             this.state.players.remove(v => v.id === input.playerId);
@@ -196,6 +203,13 @@ export interface PlayerPos {
     y:number
 }
 
+export interface TransMap {
+    type: 'TransMap',
+    playerId: number,
+    mapId:string,
+    spawnId:number
+}
+
 // 输入定义
 export type GameSystemInput = PlayerMove
     | PlayerAttack
@@ -204,4 +218,5 @@ export type GameSystemInput = PlayerMove
     | TimePast
     | MovePlyer
     | PlayerPos
-    | MoveEnd;
+    | MoveEnd
+    | TransMap;

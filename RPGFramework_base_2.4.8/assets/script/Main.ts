@@ -69,7 +69,7 @@ export default class Main extends cc.Component {
         
         await this.gameManager.join();
         let playerInfo = this.gameManager.selfPlayerInfo
-        this.loadMap(playerInfo.mapId.toString(),MapLoadModel.slices); //加载地图
+        this.loadMap(playerInfo.mapId,MapLoadModel.slices); //加载地图
     }
     
     /**
@@ -79,6 +79,7 @@ export default class Main extends cc.Component {
      */
      public loadMap(mapId:string,mapLoadModel:MapLoadModel = MapLoadModel.single)
      {
+        console.trace("loadMap=====", mapId)
          if(mapLoadModel == MapLoadModel.single)
          {
              this.loadSingleMap(mapId);

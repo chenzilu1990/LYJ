@@ -6,7 +6,7 @@ import { ServiceType } from "../shared/protocols/serviceProto";
 export interface PlayerInfo {
    playerId:number,
 
-   mapId:number,
+   mapId:string,
 
    spawnId:number
 }
@@ -87,6 +87,8 @@ export class Room {
 
         // 发送同步帧
         this.conns.forEach(v => {
+            // console.log(this.playerLastSn);
+            
             v.sendMsg('server/Frame', {
                 inputs: inputs,
                 lastSn: this.playerLastSn[v.playerId!]
