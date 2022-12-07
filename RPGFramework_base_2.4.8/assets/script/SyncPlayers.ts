@@ -155,8 +155,8 @@ export default class NewClass extends cc.Component {
             if (!player) {
                 player = this.players[playerId] = this.initPlayer(playerId);
                 player.id = playerId
-                player.node.x = playerState.x
-                player.node.y = playerState.y
+                // player.node.x = playerState.x
+                // player.node.y = playerState.y
                 // 摄像机拍摄自己
                 if (playerId === this.gameManager.selfPlayerId) {
                     this.player = player

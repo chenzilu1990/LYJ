@@ -12,7 +12,10 @@ import MapParams from "../base/MapParams";
 import { MapLoadModel } from "../base/MapLoadModel";
 
 const {ccclass, property} = cc._decorator;
-
+const SLICE_COL = 4
+const SLICE_ROW = 2
+let SLICE_W_NUM = 0
+let SLICE_H_NUM = 0
 /**
  * 地图层 
  * @author 落日故人 QQ 583051842
@@ -32,9 +35,14 @@ export default class MapLayer extends cc.Component {
 		@property(cc.Sprite)
 		private bgImg:cc.Sprite = null;
 		
-		
+		@property(cc.Node)
+		private HDMap:cc.Node = null;
+		private _sliceW: number
+		private _sliceH: number
 		public init(mapParams:MapParams):void
 		{
+			this.HDMap.removeAllChildren()
+			this._sliceImgDic = {}
 			this._mapParams = mapParams;
 			
 			if(!this.bgImg)
@@ -45,7 +53,7 @@ export default class MapLayer extends cc.Component {
 				bgNode.anchorY = 0;
 				this.bgImg = bgNode.addComponent(cc.Sprite);
 			}
-
+			cc.log(this._mapParams.bgTex)
 			this.bgImg.spriteFrame = new cc.SpriteFrame(this._mapParams.bgTex);
 
 			//如果是马赛克小地图，则需要把小地图缩放成原始地图一样大小
@@ -57,7 +65,13 @@ export default class MapLayer extends cc.Component {
 
 			this.node.width = this.width;
 			this.node.height = this.height;
-			
+			this.HDMap.width = this.width
+			this.HDMap.height = this.height
+
+			this._sliceW = mapParams.mapWidth / SLICE_COL
+			this._sliceH = mapParams.mapHeight / SLICE_ROW
+			SLICE_W_NUM = Math.ceil(this._sliceW/this._mapParams.sliceWidth)
+			SLICE_H_NUM = Math.ceil(this._sliceH/this._mapParams.sliceHeight)
 		}
 
 		
@@ -80,8 +94,15 @@ export default class MapLayer extends cc.Component {
 		 * @param py 滚动视图左上角的y坐标 
 		 * 
 		 */		
+		
+		@property(cc.Boolean)
+		isLoadBigMap:Boolean = false
 		public loadSliceImage(px:number,py:number):void
 		{
+			if (this.isLoadBigMap) {
+				this.loadBigSliceImage(px, py)
+				return
+			}
 			var iy1:number = Math.floor(py / this._mapParams.sliceHeight);
 			var iy2:number = Math.floor((py + this._mapParams.viewHeight) / this._mapParams.sliceHeight);
 
@@ -100,7 +121,7 @@ export default class MapLayer extends cc.Component {
 					{
 						let bitmap:cc.Sprite = this.getSliceSprite(key)
 						this._sliceImgDic[key] = bitmap;
-						this.node.addChild(bitmap.node);
+						this.HDMap.addChild(bitmap.node);
 						bitmap.node.x = j * this._mapParams.sliceWidth;
 						bitmap.node.y = i * this._mapParams.sliceHeight;
 
@@ -126,6 +147,82 @@ export default class MapLayer extends cc.Component {
 					
 				}
 			}
+		}
+
+		public loadBigSliceImage(px:number,py:number):void
+		{
+			const px1 = px + this._mapParams.viewWidth
+			const py1 = py + this._mapParams.viewHeight
+			
+			var iy1: number = SLICE_H_NUM * Math.floor(py / this._sliceH) + Math.floor((py % this._sliceH) / this._mapParams.sliceHeight) - 1
+			var iy2: number = SLICE_H_NUM * Math.floor(py1 / this._sliceH) + Math.floor((py1 % this._sliceH) / this._mapParams.sliceHeight) + 1
+
+			var jx1: number = SLICE_W_NUM * Math.floor(px / this._sliceW) + Math.floor((px % this._sliceW) / this._mapParams.sliceWidth) - 1
+			var jx2: number = SLICE_W_NUM * Math.floor(px1 / this._sliceW) + Math.floor((px1 % this._sliceW) / this._mapParams.sliceWidth) + 1
+
+			const getKey = (x, y) => {
+				let col = Math.floor(x / SLICE_W_NUM)
+				
+				let row = Math.floor(y / SLICE_H_NUM)
+				
+				let index = row*SLICE_COL + col + 1
+
+				
+				if(index < 10){
+					index = "0"+index
+				}
+				
+				let key = index + "/" + ((y % SLICE_H_NUM + 1)) + "_" + ((x % SLICE_W_NUM + 1));
+				// let key = index + "/" + "slices/" + ((y % SLICE_H_NUM + 1)) + "_" + ((x % SLICE_W_NUM + 1));
+				
+				return key
+			}
+
+			for(var i:number = iy1 ; i <= iy2 ; i++)
+			{
+				for(var j:number = jx1 ; j <= jx2 ; j++)
+				{
+					let key = getKey(j,i)
+					if(!this._sliceImgDic[key])
+					{
+						if (i == iy1 || i == iy2 || j == jx1 || j == jx2) {
+							continue
+						}
+						let bitmap:cc.Sprite = this.getSliceSprite(key)
+						this._sliceImgDic[key] = bitmap;
+						this.node.addChild(bitmap.node);
+						bitmap.node.x = this._sliceW * Math.floor(j / SLICE_W_NUM) + (j % SLICE_W_NUM) * this._mapParams.sliceWidth;
+						bitmap.node.y = this._sliceH * Math.floor(i / SLICE_H_NUM) + (i % SLICE_H_NUM) * this._mapParams.sliceHeight;
+
+
+						var root = "http://192.168.31.122:8080/"; //填写你的远程资源地址
+
+						cc.loader.load(root + key + ".jpg",(err:Error,tex:cc.Texture2D)=>
+						{
+							if(err)
+							{
+								cc.log("加载远程资源失败",err);
+							}else
+							{
+								bitmap.spriteFrame = new cc.SpriteFrame(tex);
+							}
+						});
+
+					} else {
+						if (i == iy1 || i == iy2 || j == jx1 || j == jx2) {
+							if (this._sliceImgDic[key].node.active){
+								this._sliceImgDic[key].node.active = false
+							}
+						} else {
+							if (!this._sliceImgDic[key].node.active){
+								this._sliceImgDic[key].node.active = true
+							}
+						}
+					}
+				}
+			}
+
+
 		}
 
 		private getSliceSprite(name:string)

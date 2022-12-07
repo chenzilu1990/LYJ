@@ -291,7 +291,6 @@ export default class SceneMap extends cc.Component {
         {
             this.mapLayer.loadSliceImage(this.targetPos.x,this.targetPos.y);
         }
-        // this.mapLayer.loadLandViews(this.player.node.x, this.player.node.y)
         this.cardLayer.loadLandViews(this.player.node.x, this.player.node.y)
         
     }

@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "command",
+            "name": "cocos2d",
+            "program": "",
+        },
+
+    ]
+}

@@ -39,7 +39,7 @@ export default class Main extends cc.Component {
     async start () {
 
 
-        // cc.director.getCollisionManager().enabled= false; //启用物理碰撞
+        cc.director.getCollisionManager().enabled= true; //启用物理碰撞
         cc.debug.setDisplayStats(true);
 
         this.splash.active = true
@@ -116,6 +116,7 @@ export default class Main extends cc.Component {
             });
 
 
+
         });
     }
 
@@ -145,7 +146,6 @@ export default class Main extends cc.Component {
                     return;
                 }
                 this.splash.active = false
-                // this.sceneMap.node.active = true
                 this.sceneMap.init(mapData,tex,MapLoadModel.slices)
             });
 

@@ -9,6 +9,8 @@
   "alignment": 0,
   "offsetX": 0,
   "offsetY": 0,
+  "sliceWidth": 256,
+  "sliceHeight": 256,
   "roadDataArr": [
     [
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,

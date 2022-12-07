@@ -62,5 +62,7 @@ export default class MapData {
      */
     public offsetY:number = 0;    
 
+    public sliceWidth:number = 0;
+    public sliceHeight:number = 0;
 
 }

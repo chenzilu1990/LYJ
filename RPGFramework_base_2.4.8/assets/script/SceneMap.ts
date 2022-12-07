@@ -114,6 +114,7 @@ export default class SceneMap extends cc.Component {
      */
     public init(mapData:MapData,bgTex:cc.Texture2D,mapLoadModel:MapLoadModel = 1)
     {
+        cc.log(this.node.children.length)
         this._mapData = mapData;
 
         this._mapParams = this.getMapParams(mapData,bgTex,mapLoadModel); //初始化地图参数
@@ -294,8 +295,8 @@ private initSpawnPoint(editData:EditSpawnPointData)
         mapParams.ceilHeight = mapData.nodeHeight;
         mapParams.viewWidth = mapData.mapWidth > cc.winSize.width ? cc.winSize.width : mapData.mapWidth;
         mapParams.viewHeight = mapData.mapHeight > cc.winSize.height ? cc.winSize.height : mapData.mapHeight;
-        mapParams.sliceWidth = 256;
-        mapParams.sliceHeight = 256;
+        mapParams.sliceWidth = mapData.sliceWidth;
+        mapParams.sliceHeight = mapData.sliceHeight;
         mapParams.bgTex = bgTex;
         mapParams.mapLoadModel = mapLoadModel;
 
