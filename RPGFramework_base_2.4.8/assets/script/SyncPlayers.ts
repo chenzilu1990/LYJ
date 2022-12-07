@@ -170,6 +170,7 @@ export default class NewClass extends cc.Component {
                 if (playerId === this.gameManager.selfPlayerId) {
                     this.player = player
                 }
+                continue
             }
 
             //画面外不处理 
