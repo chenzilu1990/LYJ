@@ -74,9 +74,9 @@ export default class NewClass extends cc.Component {
     /**
      * 初始化玩家
      */
-    public initPlayer(id)
+    public initPlayer(id,spawnId)
     {
-        var spawnPoint:SpawnPoint = this.sceneMap.getSpawnPoint(1);
+        var spawnPoint:SpawnPoint = this.sceneMap.getSpawnPoint(spawnId);
 
         let player = GameMgr.instance.getPlayer();
         player.objName = player.objName + id
@@ -141,38 +141,32 @@ export default class NewClass extends cc.Component {
         }
         // this.gameManager.localTimePast();
 
-
         this._updatePlayers();
     }
 
     public players:{[key:number]:Player} = {};
     private _updatePlayers() {
-        // Update pos
+
         let playerStates = this.gameManager.state.players;
-        // cc.log(playerStates)
         for (let playerState of playerStates) {
             let playerId = playerState.id
             let player = this.players[playerId];
 
+            // 不在当前地图
             let mapId = playerState.mapId
             let spawnId = playerState.spawnId
             if (mapId != this.sceneMap.mapParams.name){
-
                 if (player) {
                     player.node.removeFromParent()
                     delete this.players[playerState.id]
-
                 }
                 continue
             }
 
             // 场景上还没有这个 Player，新建之
             if (!player) {
-                player = this.players[playerId] = this.initPlayer(playerId);
+                player = this.players[playerId] = this.initPlayer(playerId, playerState.spawnId);
                 player.id = playerId
-                // player.node.x = playerState.x
-                // player.node.y = playerState.y
-                // 摄像机拍摄自己
                 if (playerId === this.gameManager.selfPlayerId) {
                     this.player = player
                 }
@@ -189,6 +183,7 @@ export default class NewClass extends cc.Component {
                         player.setVisiable(true)
                     }
             }
+
             // 根据最新状态，更新 Player 表现组件
             let playerWorldP = MapRoadUtils.instance.getWorldPointByPixel(player.node.x, player.node.y)
             let playerTargetP = MapRoadUtils.instance.getWorldPointByPixel(playerState.targetX, playerState.targetY)
@@ -198,7 +193,6 @@ export default class NewClass extends cc.Component {
             } else {
                 player.navTo(playerState.targetX, playerState.targetY)
             }
-
 
         }
         // Clear left players
@@ -211,8 +205,6 @@ export default class NewClass extends cc.Component {
             }
         }
 
-        
-        // cc.log(this.players)
     }
 
 
