@@ -19,7 +19,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 10,
+    "version": 11,
     "services": [
         {
             "id": 0,
@@ -375,6 +375,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
                             "type": "Number"
                         }
                     }
+                },
+                {
+                    "id": 3,
+                    "name": "playerInfo",
+                    "type": {
+                        "type": "Reference",
+                        "target": "../../models/Room/PlayerInfo"
+                    }
                 }
             ]
         },
@@ -494,6 +502,20 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "Number"
                     }
+                },
+                {
+                    "id": 10,
+                    "name": "mapId",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 11,
+                    "name": "spawnId",
+                    "type": {
+                        "type": "Number"
+                    }
                 }
             ]
         },
@@ -542,6 +564,32 @@ export const serviceProto: ServiceProto<ServiceType> = {
                                 }
                             }
                         ]
+                    }
+                }
+            ]
+        },
+        "../../models/Room/PlayerInfo": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "playerId",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "mapId",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "spawnId",
+                    "type": {
+                        "type": "Number"
                     }
                 }
             ]

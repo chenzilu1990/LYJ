@@ -65,6 +65,7 @@ export default class NewClass extends cc.Component {
     }
     private sceneMap:SceneMap
     init(sceneMap:SceneMap) {
+        this.players = {}
         this.sceneMap = sceneMap
         this.gameManager = Main.instance.gameManager
         this.isInit = true
@@ -74,7 +75,7 @@ export default class NewClass extends cc.Component {
      */
     public initPlayer(id)
     {
-        var spawnPoint:SpawnPoint = this.sceneMap.getSpawnPoint(0);
+        var spawnPoint:SpawnPoint = this.sceneMap.getSpawnPoint(1);
 
         let player = GameMgr.instance.getPlayer();
         player.objName = player.objName + id
@@ -193,6 +194,7 @@ export default class NewClass extends cc.Component {
                 delete this.players[player.id];
             }
         }
+        // cc.log(this.players)
     }
 
 

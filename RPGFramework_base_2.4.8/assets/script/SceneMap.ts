@@ -114,7 +114,6 @@ export default class SceneMap extends cc.Component {
      */
     public init(mapData:MapData,bgTex:cc.Texture2D,mapLoadModel:MapLoadModel = 1)
     {
-        cc.log(this.node.children.length)
         this._mapData = mapData;
 
         this._mapParams = this.getMapParams(mapData,bgTex,mapLoadModel); //初始化地图参数
@@ -177,6 +176,11 @@ export default class SceneMap extends cc.Component {
      */
     public initMapElement()
     {
+        this.entityLayer.node.removeAllChildren()
+        this.npcList = []
+        this.monsterList = []
+        this.transferDoorList = []
+        this.spawnPointList = []
         var mapItems:object[] = this._mapData.mapItems;
         console.log("mapItems",mapItems);
 

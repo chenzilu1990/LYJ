@@ -47,7 +47,7 @@ export default class Main extends cc.Component {
         //this.loadSingleMap("10001"); //选择加载单张地图
         //this.loadSlicesMap("10001"); //选择分切片加载地图
 
-        this.loadMap("10001",MapLoadModel.slices); //加载地图
+        // this.loadMap("10001",MapLoadModel.slices); //加载地图
 
     }
 
@@ -68,7 +68,8 @@ export default class Main extends cc.Component {
         });
         
         await this.gameManager.join();
-
+        let playerInfo = this.gameManager.selfPlayerInfo
+        this.loadMap(playerInfo.mapId.toString(),MapLoadModel.slices); //加载地图
     }
     
     /**

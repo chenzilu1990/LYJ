@@ -17,4 +17,9 @@ export const gameConfig = {
     mapHeight:2080,
 
     randomInterval: 5,
+
+    mapId:10001,
+
+    spawnId:0,
+
 }

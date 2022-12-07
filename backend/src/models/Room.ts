@@ -3,7 +3,13 @@ import { gameConfig } from "../shared/game/gameConfig";
 import { GameSystem, GameSystemInput, PlayerJoin } from "../shared/game/GameSystem";
 import { ReqJoin } from "../shared/protocols/PtlJoin";
 import { ServiceType } from "../shared/protocols/serviceProto";
+export interface PlayerInfo {
+   playerId:number,
 
+   mapId:number,
+
+   spawnId:number
+}
 /**
  * 服务端 - 房间 - 逻辑系统
  */
@@ -55,7 +61,7 @@ export class Room {
             })
         });
 
-        return input.playerId;
+        return {playerId:input.playerId, mapId:gameConfig.mapId, spawnId:gameConfig.spawnId};
     }
 
     applyInput(input: GameSystemInput) {
@@ -105,6 +111,7 @@ export class Room {
             type: 'PlayerLeave',
             playerId: playerId
         });
+        this.players.removeOne(v => v === playerId)
     }
 }
 

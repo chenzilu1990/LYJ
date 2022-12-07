@@ -7,7 +7,13 @@ import { GameSystem, GameSystemState } from "../shared/game/GameSystem";
 import { ClientInput, MsgClientInput } from "../shared/protocols/client/MsgClientInput";
 import { MsgFrame } from "../shared/protocols/server/MsgFrame";
 import { serviceProto, ServiceType } from "../shared/protocols/serviceProto";
+export interface PlayerInfo {
+   playerId:number,
 
+   mapId:number,
+
+   spawnId:number
+}
 /**
  * 前端游戏状态管理
  * 主要用于实现前端的预测和和解
@@ -23,6 +29,7 @@ export class GameManager {
     selfPlayerId: number = -1;
     lastSN = 0;
     players:number[] = []
+    selfPlayerInfo: PlayerInfo;
 
     get state() {
         return this.gameSystem.state;
@@ -41,7 +48,7 @@ export class GameManager {
         });;
         client.listenMsg('server/Frame', msg => { this._onServerSync(msg) });
 
-        client.listenMsg('server/RandomMapdata', msg => { this._onServerRandom(msg) });
+        client.listenMsg('server/RandomMapdata', msg => { this._onServerRandom() });
 
         // 模拟网络延迟 可通过 URL 参数 ?lag=200 设置延迟
         let networkLag = parseInt(location.search.match(/\blag=(\d+)/)?.[1] || '0');
@@ -84,6 +91,7 @@ export class GameManager {
         this.lastRecvSetverStateTime = Date.now();
         this.selfPlayerId = ret.res.playerId;
         this.players = ret.res.players
+        this.selfPlayerInfo = ret.res.playerInfo
         cc.log("join=======end")
     }
 

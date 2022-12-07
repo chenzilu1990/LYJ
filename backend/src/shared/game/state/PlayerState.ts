@@ -9,5 +9,7 @@ export interface PlayerState {
     targetY:number,
     moving:boolean,
     x:number, 
-    y:number
+    y:number,
+    mapId:number,
+    spawnId:number
 }

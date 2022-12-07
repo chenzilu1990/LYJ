@@ -1803,8 +1803,8 @@
       "cx": 57,
       "cy": 6,
       "params": "",
-      "targetMapId": "10003",
-      "targetMapSpawnId": 1,
+      "targetMapId": "10002",
+      "targetMapSpawnId": 0,
       "transferType": 1
     }
   ]

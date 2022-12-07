@@ -100,6 +100,8 @@ export class GameSystem {
                 x:gameConfig.mapWidth/2,
                 y:gameConfig.mapHeight/2,
                 moving:false,
+                mapId:gameConfig.mapId,
+                spawnId:gameConfig.spawnId
             })
         }
         else if (input.type === 'PlayerLeave') {

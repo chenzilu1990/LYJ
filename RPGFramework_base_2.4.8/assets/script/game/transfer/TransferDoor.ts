@@ -9,6 +9,9 @@
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 
 import { EditTransferData } from "../../editObjData/EditObjData";
+import Main from "../../Main";
+import { MapLoadModel } from "../../map/base/MapLoadModel";
+import MapRoadUtils from "../../map/road/MapRoadUtils";
 import Player from "../character/Player";
 
 
@@ -116,6 +119,7 @@ export default class TransferDoor extends cc.Component {
         if(player != null)
         {
             console.log("跳转到地图",this.targetMapId, this.targetMapSpawnId);
+            Main.instance.loadMap(this.targetMapId.toString(), MapLoadModel.slices)
         }
     }
 
