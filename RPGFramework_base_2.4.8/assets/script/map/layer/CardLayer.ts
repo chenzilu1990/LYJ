@@ -56,7 +56,7 @@ export default class CardLayer extends cc.Component {
 		private optimize: boolean = true
 
 		public loadLandViews(x:number, y:number): void {
-
+			if (true) return
 			let pointCenter = MapRoadUtils.instance.getWorldPointByPixel(x, y)
 			
 			const hideWidth = 10
