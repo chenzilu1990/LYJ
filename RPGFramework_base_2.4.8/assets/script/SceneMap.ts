@@ -301,6 +301,7 @@ private initSpawnPoint(editData:EditSpawnPointData)
         mapParams.viewHeight = mapData.mapHeight > cc.winSize.height ? cc.winSize.height : mapData.mapHeight;
         mapParams.sliceWidth = mapData.sliceWidth;
         mapParams.sliceHeight = mapData.sliceHeight;
+        mapParams.isBigMap = mapData.isBigMap;
         mapParams.bgTex = bgTex;
         mapParams.mapLoadModel = mapLoadModel;
 

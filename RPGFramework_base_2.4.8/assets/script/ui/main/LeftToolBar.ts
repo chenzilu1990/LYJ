@@ -23,6 +23,11 @@ export default class LeftToolBar extends cc.Component {
     @property(cc.Button)
     mapBtn2: cc.Button = null;
 
+    @property(cc.Button)
+    mapBtn3: cc.Button = null;
+
+    @property(cc.Node)
+    HDmap: cc.Node = null;
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {}
@@ -41,7 +46,11 @@ export default class LeftToolBar extends cc.Component {
             
         },this);
 
-
+        this.mapBtn3.node.on(cc.Node.EventType.TOUCH_END,(event:cc.Event.EventTouch)=>
+        {
+            this.HDmap.active = !this.HDmap.active
+            
+        },this);
 
     }
 

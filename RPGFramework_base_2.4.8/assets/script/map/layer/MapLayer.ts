@@ -12,7 +12,7 @@ import MapParams from "../base/MapParams";
 import { MapLoadModel } from "../base/MapLoadModel";
 
 const {ccclass, property} = cc._decorator;
-const SLICE_COL = 4
+const SLICE_COL = 3
 const SLICE_ROW = 2
 let SLICE_W_NUM = 0
 let SLICE_H_NUM = 0
@@ -94,12 +94,10 @@ export default class MapLayer extends cc.Component {
 		 * @param py 滚动视图左上角的y坐标 
 		 * 
 		 */		
-		
-		@property(cc.Boolean)
-		isLoadBigMap:Boolean = false
+
 		public loadSliceImage(px:number,py:number):void
 		{
-			if (this.isLoadBigMap) {
+			if (this._mapParams.isBigMap) {
 				this.loadBigSliceImage(px, py)
 				return
 			}
@@ -141,7 +139,13 @@ export default class MapLayer extends cc.Component {
 
 						cc.loader.loadRes("map/bg/" + this._mapParams.bgName + "/slices/" + key,cc.Texture2D,(error:Error,tex:cc.Texture2D)=>
 						{
-							bitmap.spriteFrame = new cc.SpriteFrame(tex);
+							if(error)
+							{
+								cc.log("加载本地资源失败",error);
+							}else {
+
+								bitmap.spriteFrame = new cc.SpriteFrame(tex);
+							}
 						});
 					}
 					
@@ -172,7 +176,7 @@ export default class MapLayer extends cc.Component {
 					index = "0"+index
 				}
 				
-				let key = index + "/" + ((y % SLICE_H_NUM + 1)) + "_" + ((x % SLICE_W_NUM + 1));
+				let key = index + "/" + "slices/" + ((y % SLICE_H_NUM + 1)) + "_" + ((x % SLICE_W_NUM + 1));
 				// let key = index + "/" + "slices/" + ((y % SLICE_H_NUM + 1)) + "_" + ((x % SLICE_W_NUM + 1));
 				
 				return key
@@ -190,18 +194,19 @@ export default class MapLayer extends cc.Component {
 						}
 						let bitmap:cc.Sprite = this.getSliceSprite(key)
 						this._sliceImgDic[key] = bitmap;
-						this.node.addChild(bitmap.node);
+						this.HDMap.addChild(bitmap.node);
 						bitmap.node.x = this._sliceW * Math.floor(j / SLICE_W_NUM) + (j % SLICE_W_NUM) * this._mapParams.sliceWidth;
 						bitmap.node.y = this._sliceH * Math.floor(i / SLICE_H_NUM) + (i % SLICE_H_NUM) * this._mapParams.sliceHeight;
 
 
 						var root = "http://192.168.31.122:8080/"; //填写你的远程资源地址
 
-						cc.loader.load(root + key + ".jpg",(err:Error,tex:cc.Texture2D)=>
+						// cc.loader.load(root + key + ".jpg",(err:Error,tex:cc.Texture2D)=>
+						cc.loader.loadRes("map/bg/" + this._mapParams.bgName + "/slices/" + key,cc.Texture2D,(err:Error,tex:cc.Texture2D)=>
 						{
 							if(err)
 							{
-								cc.log("加载远程资源失败",err);
+								cc.log("加载资源失败",err);
 							}else
 							{
 								bitmap.spriteFrame = new cc.SpriteFrame(tex);

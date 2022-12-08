@@ -61,6 +61,7 @@ export default class MapParams
      */
     public sliceHeight:number = 256;
 
+    public isBigMap:boolean = false;
     /**
      * 底图加载模式，是单张还是切片加载
      */

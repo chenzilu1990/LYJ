@@ -113,8 +113,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 189,
-      "height": 168
+      "width": 256,
+      "height": 256
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -166,7 +166,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "d9055efe-4570-4de9-83b3-e5d0adae7ecf"
+      "__uuid__": "d54119ad-6731-431f-8ec4-cbbf61fe8e9f"
     },
     "_type": 0,
     "_sizeMode": 2,
@@ -192,40 +192,37 @@
     "_enabled": true,
     "images": [
       {
-        "__uuid__": "d9055efe-4570-4de9-83b3-e5d0adae7ecf"
+        "__uuid__": "d54119ad-6731-431f-8ec4-cbbf61fe8e9f"
       },
       {
-        "__uuid__": "1e964e10-02dd-44fc-b5e9-402723e6576c"
+        "__uuid__": "38012bac-d031-4b3d-af4f-05075e917b3d"
       },
       {
-        "__uuid__": "a9fd2f7c-1f4c-4207-a506-3661411303f0"
+        "__uuid__": "90aa9f00-d64a-41a2-9135-60f444114eb1"
       },
       {
-        "__uuid__": "29ec3509-79b7-4ab5-9b7c-48141405e7f1"
+        "__uuid__": "f63f5f9f-e61c-4e01-adfe-3bfa74ed9ec3"
       },
       {
-        "__uuid__": "4ef3c888-2791-4fe8-b6b4-d4f4f36b7327"
+        "__uuid__": "48c59007-0219-4692-85be-122ed1ff49fd"
       },
       {
-        "__uuid__": "eb117f8e-7d3d-49cb-a465-1226669e550e"
+        "__uuid__": "38734de7-f8e7-4f56-a10b-3981156ae425"
       },
       {
-        "__uuid__": "24a4dbcf-e57a-4e16-9d05-473820408a63"
+        "__uuid__": "553c9c96-f397-4e45-a28e-520259054255"
       },
       {
-        "__uuid__": "29f97287-e599-43ed-90e6-fe1e8f683e44"
+        "__uuid__": "a5aedbf5-bbbd-4f29-a19f-afea5627a4aa"
       },
       {
-        "__uuid__": "9c0e88c1-b4cf-4a01-8749-28b015cb62be"
+        "__uuid__": "8c9ad6b9-fee2-44bb-a803-f4160f87ab11"
       },
       {
-        "__uuid__": "c62d04d6-10db-456a-b450-dafc436b1135"
-      },
-      {
-        "__uuid__": "19cf2ec3-88f4-43d2-a4e3-2a50d1e7211b"
+        "__uuid__": "734255ff-b73e-4b6b-b6e7-5fcbe72566fa"
       }
     ],
-    "frameTime": 0.05,
+    "frameTime": 0.15,
     "playTimes": 0,
     "reverse": false,
     "autoPlayOnLoad": true,

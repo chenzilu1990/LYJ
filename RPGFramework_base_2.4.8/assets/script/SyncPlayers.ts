@@ -173,27 +173,24 @@ export default class NewClass extends cc.Component {
                 continue
             }
 
-            //画面外不处理 
-            if (playerId != this.gameManager.selfPlayerId){
-                if (player.node.position.x < this.camera.node.position.x || 
-                    player.node.position.y < this.camera.node.position.y || 
-                    player.node.position.x > this.camera.node.position.x + this.sceneMap.mapParams.viewWidth || 
-                    player.node.position.y > this.camera.node.position.y + this.sceneMap.mapParams.viewHeight){
-                        player.setVisiable(false)
-                    } else {
-                        player.setVisiable(true)
-                    }
-            }
 
             // 根据最新状态，更新 Player 表现组件
             let playerWorldP = MapRoadUtils.instance.getWorldPointByPixel(player.node.x, player.node.y)
             let playerTargetP = MapRoadUtils.instance.getWorldPointByPixel(playerState.targetX, playerState.targetY)
 
-            if (playerWorldP.x === playerTargetP.x &&  playerWorldP.y === playerTargetP.y){
-
-            } else {
-                player.navTo(playerState.targetX, playerState.targetY)
+            // 玩家有目标位置，则移动
+            if (playerWorldP.x !== playerTargetP.x || playerWorldP.y !== playerTargetP.y) {
+                player.navTo(playerState.targetX, playerState.targetY);
             }
+
+            // 根据是否在画面内更新可见性
+            let isInScreen = (
+                player.node.position.x >= this.camera.node.position.x &&
+                player.node.position.y >= this.camera.node.position.y &&
+                player.node.position.x <= this.camera.node.position.x + this.sceneMap.mapParams.viewWidth &&
+                player.node.position.y <= this.camera.node.position.y + this.sceneMap.mapParams.viewHeight
+            );
+            player.setVisiable(isInScreen);
 
         }
         // Clear left players
