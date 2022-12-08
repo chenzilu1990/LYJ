@@ -46,8 +46,8 @@ export default class CardLayer extends cc.Component {
 			this.node.width = this.width
 			this.node.height = this.height
 
-			// this.node.removeAllChildren()
-			// this._addLandView = {}
+			this.node.removeAllChildren()
+			this._addLandView = {}
 
 		}
 

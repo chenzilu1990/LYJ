@@ -612,7 +612,6 @@
     "HDMap": {
       "__id__": 10
     },
-    "isLoadBigMap": true,
     "_id": "0dObVSbGlI5LcvPeZfGUbf"
   },
   {
@@ -623,7 +622,7 @@
       "__id__": 6
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 13
@@ -864,8 +863,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 375,
-      "height": 375
+      "width": 200,
+      "height": 200
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1158,7 +1157,7 @@
         "__id__": 32
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 39
@@ -4663,8 +4662,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        187.5,
-        187.5,
+        100,
+        100,
         0,
         0,
         0,
@@ -4715,8 +4714,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 256,
-      "height": 256
+      "width": 128,
+      "height": 128
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -4822,8 +4821,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 64,
-      "height": 64
+      "width": 32,
+      "height": 32
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
