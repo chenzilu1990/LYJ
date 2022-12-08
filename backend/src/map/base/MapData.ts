@@ -66,4 +66,6 @@ export default class MapData {
     public sliceHeight:number = 0;
 
     public isBigMap:boolean = false;
+
+    
 }
