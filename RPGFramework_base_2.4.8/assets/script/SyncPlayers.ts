@@ -44,6 +44,7 @@ export default class NewClass extends cc.Component {
     public player:Player = null;
     onLoad () {
 
+        cc.log("onLoad============")
 
         this.joyStick.options = {
 
@@ -60,12 +61,14 @@ export default class NewClass extends cc.Component {
             }
         }
     }
-
+    
     start () {
+        cc.log("start============")
         this.node.on(cc.Node.EventType.TOUCH_START,this.onMapMouseDown,this);
     }
     private sceneMap:SceneMap
     init(sceneMap:SceneMap) {
+        cc.log("init=============")
         this.players = {}
         this.sceneMap = sceneMap
         this.gameManager = Main.instance.gameManager
@@ -115,6 +118,7 @@ export default class NewClass extends cc.Component {
 
     public isInit:boolean = false;
     update (dt) {
+        // cc.log("update=============")
         if(!this.isInit)
         {
             return;
@@ -170,6 +174,13 @@ export default class NewClass extends cc.Component {
                 if (playerId === this.gameManager.selfPlayerId) {
                     this.player = player
                 }
+                this.gameManager.sendClientInput({
+                    type: 'MovePlayer',
+                    targetX:this.player.node.x,
+                    targetY:this.player.node.y,
+                    x:this.player.node.x,
+                    y:this.player.node.y
+                })
                 continue
             }
 
