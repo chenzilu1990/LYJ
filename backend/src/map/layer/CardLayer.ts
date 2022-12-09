@@ -61,7 +61,7 @@ export default class CardLayer extends cc.Component {
 
 			let pointCenter = MapRoadUtils.instance.getWorldPointByPixel(x, y)
 			cc.log(pointCenter.x, pointCenter.y)
-			const hideWidth = 10
+			const hideWidth = 1
 			const left = pointCenter.x - hideWidth
 			const right = pointCenter.x + hideWidth
 			const down = pointCenter.y - hideWidth

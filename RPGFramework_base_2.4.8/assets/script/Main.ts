@@ -69,7 +69,7 @@ export default class Main extends cc.Component {
         
         await this.gameManager.join();
         let playerInfo = this.gameManager.selfPlayerInfo
-        this.loadMap(playerInfo.mapId,MapLoadModel.slices); //加载地图
+        this.loadMap(playerInfo.mapId,MapLoadModel.single); //加载地图
     }
     
     /**
@@ -113,7 +113,7 @@ export default class Main extends cc.Component {
                     console.log("加载地图背景失败 path = ",bgPath,"error",error);
                     return;
                 }
-
+                this.splash.active = false
                 this.sceneMap.init(mapData,tex,MapLoadModel.single)
             });
 
