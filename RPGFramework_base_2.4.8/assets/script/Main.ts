@@ -79,7 +79,6 @@ export default class Main extends cc.Component {
      */
      public loadMap(mapId:string,mapLoadModel:MapLoadModel = MapLoadModel.single)
      {
-        // console.trace("loadMap=====", mapId)
          if(mapLoadModel == MapLoadModel.single)
          {
              this.loadSingleMap(mapId);
