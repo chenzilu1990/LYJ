@@ -69,6 +69,7 @@ export default class NewClass extends cc.Component {
     private sceneMap:SceneMap
     init(sceneMap:SceneMap) {
         cc.log("init=============")
+        this.player = null
         this.players = {}
         this.sceneMap = sceneMap
         this.gameManager = Main.instance.gameManager
