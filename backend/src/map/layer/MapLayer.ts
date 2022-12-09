@@ -108,7 +108,7 @@ export default class MapLayer extends cc.Component {
 			var jx2:number = Math.floor((px + this._mapParams.viewWidth) / this._mapParams.sliceWidth);
 			
 			var key:string;
-			
+			// cc.log(this._sliceImgDic)
 			for(var i:number = iy1 ; i <= iy2 ; i++)
 			{
 				for(var j:number = jx1 ; j <= jx2 ; j++)

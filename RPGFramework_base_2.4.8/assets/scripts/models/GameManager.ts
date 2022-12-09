@@ -96,7 +96,7 @@ export class GameManager {
     }
 
     private _onServerRandom() {
-        cc.log('_onServerRandom===')
+        // cc.log('_onServerRandom===')
         SceneMap.instance.randomMapdata()
     }
 

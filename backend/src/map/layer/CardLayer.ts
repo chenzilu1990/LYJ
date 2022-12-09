@@ -57,10 +57,14 @@ export default class CardLayer extends cc.Component {
 
 		public loadLandViews(x:number, y:number): void {
 			// if (true) return
-			// cc.log(this._addLandView)
-
+			
 			let pointCenter = MapRoadUtils.instance.getWorldPointByPixel(x, y)
-			cc.log(pointCenter.x, pointCenter.y)
+			// cc.log(pointCenter.x, pointCenter.y)
+			// cc.log(this.node.children.length)
+			// cc.log(Object.keys(this._addLandView))
+			
+
+
 			const hideWidth = 1
 			const left = pointCenter.x - hideWidth
 			const right = pointCenter.x + hideWidth
@@ -100,29 +104,38 @@ export default class CardLayer extends cc.Component {
 					
 						if (i === left && outrightV ){
 							landV = outrightV
+							delete this._addLandView[outRightkey]
 						} 
 						else if (i === right && outleftV ){
 							landV = outleftV
+							delete this._addLandView[outLeftkey]
 						} 
 						else if (j === up && (outdownV ) ){
 							landV = outdownV
+							delete this._addLandView[outDownkey]
 						} 
 						else if (j === down && (outupV ) ){
 							landV = outupV 
+							delete this._addLandView[outUpkey]
 						} 
 						else if (i === left && j === up && rightDownV) {
 							landV = rightDownV
+							delete this._addLandView[rightDown]
 						}
 						else if (i === right && j === down && leftUpV) {
 							landV = leftUpV
+							delete this._addLandView[leftUp]
 						}
 						else if (i === right && j === up && leftDownV) {
 							landV = leftDownV
+							delete this._addLandView[leftDown]
 						}
 						else if (i === left && j === down && rightUpV) {
 							landV = rightUpV
+							delete this._addLandView[rightUp]
 						}
 						else {
+							// cc.log("F============")
 							let landView = this.dequeueReusableLandView(i, j)
 							this.node.addChild(landView.node)
 							landV = landView

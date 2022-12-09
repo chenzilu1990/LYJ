@@ -18,7 +18,7 @@ export const gameConfig = {
 
     randomInterval: 5,
 
-    mapId:"1070.map",
+    mapId:"10001",
 
     spawnId:0,
 
