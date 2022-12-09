@@ -299,11 +299,12 @@ private initSpawnPoint(editData:EditSpawnPointData)
         mapParams.ceilHeight = mapData.nodeHeight;
         mapParams.viewWidth = mapData.mapWidth > cc.winSize.width ? cc.winSize.width : mapData.mapWidth;
         mapParams.viewHeight = mapData.mapHeight > cc.winSize.height ? cc.winSize.height : mapData.mapHeight;
-        mapParams.sliceWidth = mapData.sliceWidth;
-        mapParams.sliceHeight = mapData.sliceHeight;
-        mapParams.isBigMap = mapData.isBigMap;
         mapParams.bgTex = bgTex;
+
         mapParams.mapLoadModel = mapLoadModel;
+        mapParams.sliceWidth = mapData.sliceWidth ?? 256;
+        mapParams.sliceHeight = mapData.sliceHeight ?? 256;
+        mapParams.isBigMap = mapData.isBigMap ?? false;
 
         return mapParams;
     }

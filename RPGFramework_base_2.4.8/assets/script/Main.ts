@@ -69,7 +69,7 @@ export default class Main extends cc.Component {
         
         await this.gameManager.join();
         let playerInfo = this.gameManager.selfPlayerInfo
-        this.loadMap(playerInfo.mapId,MapLoadModel.single); //加载地图
+        this.loadMap(playerInfo.mapId,MapLoadModel.slices); //加载地图
     }
     
     /**
@@ -102,49 +102,51 @@ export default class Main extends cc.Component {
                 console.log("加载地图数据失败 path = ",dataPath,"error",error);
                 return;
             }
-
+            
             var mapData:MapData = res.json as MapData;
-
+            
             var bgPath:string = "map/bg/" + mapData.bgName;
             cc.resources.load(bgPath,cc.Texture2D,(error:Error,tex:cc.Texture2D)=>
             {
                 if(error != null)
                 {
                     console.log("加载地图背景失败 path = ",bgPath,"error",error);
+                    this.loadSlicesMap(mapId)
                     return;
                 }
                 this.splash.active = false
                 this.sceneMap.init(mapData,tex,MapLoadModel.single)
             });
-
-
-
+            
+            
+            
         });
     }
-
+    
     /**
      * 加载分切片地图
-     */
-    protected loadSlicesMap(mapId:string)
-    {
-        var dataPath:string = "map/data/" + mapId;
-
-        cc.resources.load(dataPath,cc.JsonAsset,(error:Error,res:cc.JsonAsset)=>
-        {
-            if(error != null)
-            {
-                console.log("加载地图数据失败 path = ",dataPath,"error",error);
-                return;
+    */
+   protected loadSlicesMap(mapId:string)
+   {
+       var dataPath:string = "map/data/" + mapId;
+       
+       cc.resources.load(dataPath,cc.JsonAsset,(error:Error,res:cc.JsonAsset)=>
+       {
+           if(error != null)
+           {
+               console.log("加载地图数据失败 path = ",dataPath,"error",error);
+               return;
             }
-
+            
             var mapData:MapData = res.json as MapData;
-
+            
             var bgPath:string = "map/bg/" + mapData.bgName + "/miniMap";
             cc.resources.load(bgPath,cc.Texture2D,(error:Error,tex:cc.Texture2D)=>
             {
                 if(error != null)
                 {
                     console.log("加载小地图背景失败 path = ",bgPath,"error",error);
+                    this.loadSingleMap(mapId)
                     return;
                 }
                 this.splash.active = false
